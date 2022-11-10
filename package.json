@@ -1,0 +1,62 @@
+{
+  "main": "public/main.js",
+  "homepage": "./",
+  "name": "skt-project",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@electron/remote": "^2.0.8",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "concurrently": "^7.5.0",
+    "cross-env": "^7.0.3",
+    "electron-is-dev": "^2.0.0",
+    "mysql2": "^2.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
+    "react-scripts": "5.0.1",
+    "sequelize": "^6.25.3",
+    "styled-components": "^5.3.6",
+    "wait-on": "^6.0.1",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "app:start": "concurrently -k \"cross-env BROWSER=none yarn react:start\" \"yarn electron:start\"",
+    "app:build": "yarn react:build && yarn electron:build",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "electron:start": "wait-on tcp:3000 && electron .",
+    "electron:build": "electron-builder -c.extraMetadata.main=build/main.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.example.electron-cra",
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "devDependencies": {
+    "electron": "^21.2.1",
+    "electron-builder": "^23.6.0"
+  }
+}

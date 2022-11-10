@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px 0px 20px;
+  /* background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 0px 18px; */
+  color: #272727;
+}
+
+.adminPageBtn {
+  padding: 10px 12px 10px 12px;
+  background: none;
+  background-color: #ffffff;
+  border: none;
+  border: 1px solid #4e73df;
+  border-radius: 100%;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 0px 18px;
+  cursor: pointer;
+}
+
+.adminPageBtn:hover {
+  background-color: #f3f3f3;
+}

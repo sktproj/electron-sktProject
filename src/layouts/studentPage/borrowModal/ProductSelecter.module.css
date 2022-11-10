@@ -1,0 +1,17 @@
+.selecter {
+  width: 120px;
+  height: 35px;
+  background: none;
+  background-color: #ffffff;
+  border: 2px solid #36b9cc;
+  border-radius: 10px;
+  color: #36b9cc;
+  font-size: 22px;
+  font-family: 'maplestoryLight';
+  cursor: pointer;
+}
+
+.selecter:hover {
+  background-color: #36b9cc;
+  color: #ffffff;
+}

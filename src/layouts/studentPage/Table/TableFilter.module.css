@@ -1,0 +1,26 @@
+.filters {
+  display: flex;
+  align-items: center;
+  height: 75px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #c5c5c5;
+}
+
+.filter {
+  margin: 0px 40px 0px 0px;
+  padding: 0px 0px 5px 0px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-family: 'maplestoryBold';
+  color: #3e3e3e;
+  cursor: pointer;
+}
+
+.filter:hover {
+  color: #4e73df;
+}
+
+.activeFilter {
+  color: #4e73df;
+}

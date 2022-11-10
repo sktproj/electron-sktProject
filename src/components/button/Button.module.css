@@ -1,0 +1,12 @@
+.button {
+  background: none;
+  background-color: #ffffff;
+  border-radius: 10px;
+  font-family: 'maplestoryLight';
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 0px 18px;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: #ffffff;
+}
