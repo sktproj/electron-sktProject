@@ -2,11 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import StudentPageContext from 'context/StudentPageContext';
 import Table from 'components/table/Table';
 import FILTER_LIST from 'constant/FILTER';
-import TableBodyAPI from 'layouts/studentPage/Table/BorrowTableBodyAPI';
+import TableBodyAPI from 'layouts/studentPage/table/BorrowTableBodyAPI';
 
 function TableBody({ currentFilter }) {
   const [rowList, setRowList] = useState([]);
-  const { student, currentModal } = useContext(StudentPageContext);
+  const { student } = useContext(StudentPageContext);
   const studentId = student.id;
 
   useEffect(() => {
@@ -14,10 +14,6 @@ function TableBody({ currentFilter }) {
       let borrowList;
       // eslint-disable-next-line default-case
       switch (currentFilter) {
-        case FILTER_LIST.ALL:
-          borrowList = await TableBodyAPI.getBorrowListFilterAll(studentId);
-          break;
-
         case FILTER_LIST.BORROW:
           borrowList = await TableBodyAPI.getBorrowListFilterBorrow(studentId);
           break;
@@ -28,7 +24,7 @@ function TableBody({ currentFilter }) {
       }
       setRowList(borrowList);
     })();
-  }, [currentModal, currentFilter]);
+  }, [currentFilter]);
 
   return (
     <Table

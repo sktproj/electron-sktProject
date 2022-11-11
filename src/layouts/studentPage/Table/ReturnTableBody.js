@@ -4,7 +4,7 @@ import Table from 'components/table/Table';
 
 const { ipcRenderer } = window.require('electron');
 
-function ReturnTableBody({ currentFilter }) {
+function ReturnTableBody() {
   const [rowList, setRowList] = useState([]);
   const { student, currentModal } = useContext(StudentPageContext);
   const studentId = student.id;
@@ -14,7 +14,7 @@ function ReturnTableBody({ currentFilter }) {
       const returnProductList = await getReturnProductList(studentId);
       setRowList(returnProductList);
     })();
-  }, [currentModal, currentFilter]);
+  }, []);
 
   return (
     <Table

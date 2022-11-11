@@ -47,14 +47,6 @@ ipcMain.on('FindAllProduct', async event => {
 });
 
 // get borrow list
-ipcMain.on('GetBorrowListFilterAll', async (event, payload) => {
-  const BorrowService = require('../services/borrow.service');
-  const borrowList = await BorrowService.findByStudentIdJoinProduct(
-    JSON.parse(payload),
-  );
-  event.reply('Reply_GetBorrowListFilterAll', JSON.stringify(borrowList));
-});
-
 ipcMain.on('GetBorrowListFilterBorrow', async (event, payload) => {
   const BorrowService = require('../services/borrow.service');
   const borrowList = await BorrowService.findByStudentIdAndBorrowingJoinProduct(

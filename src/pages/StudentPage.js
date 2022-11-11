@@ -3,7 +3,7 @@ import StudentPageContext from 'context/StudentPageContext';
 import Header from 'components/header/Header';
 import Info from 'layouts/studentPage/info/Info';
 import BorrowButton from 'layouts/studentPage/borrowButton/BorrowButton';
-import Table from 'layouts/studentPage/Table/Table';
+import Table from 'layouts/studentPage/table/Table';
 import Footer from 'components/footer/Footer';
 import BorrowModal from 'layouts/studentPage/borrowModal/BorrowModal';
 import styles from './StudentPage.module.css';

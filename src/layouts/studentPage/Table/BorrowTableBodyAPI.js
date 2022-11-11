@@ -4,16 +4,6 @@ import DateUtil from 'utils/Date';
 const { ipcRenderer } = window.require('electron');
 
 class TableBodyAPI {
-  static getBorrowListFilterAll(studentId) {
-    return new Promise(resolve => {
-      ipcRenderer.send('GetBorrowListFilterAll', JSON.stringify(studentId));
-      ipcRenderer.on('Reply_GetBorrowListFilterAll', (event, payload) => {
-        const borrowList = JSON.parse(payload);
-        resolve(this.#processBorrowList(borrowList));
-      });
-    });
-  }
-
   static getBorrowListFilterBorrow(studentId) {
     return new Promise(resolve => {
       ipcRenderer.send('GetBorrowListFilterBorrow', JSON.stringify(studentId));
@@ -72,6 +62,7 @@ class TableBodyAPI {
         color="#e74a3b"
         onClickEvent={() => {
           ipcRenderer.send('ReturnProduct', JSON.stringify(borrowId));
+          window.location.reload();
         }}
       >
         반납

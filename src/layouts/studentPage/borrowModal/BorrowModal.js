@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import StudentPageContext from 'context/StudentPageContext';
 import ProductSelecter from 'layouts/studentPage/borrowModal/ProductSelecter';
 import ConfirmButton from 'layouts/studentPage/borrowModal/ConfirmButton';
@@ -9,37 +9,19 @@ import MODAL_LIST from 'constant/MODAL';
 const { ipcRenderer } = window.require('electron');
 const customStyles = {
   content: {
-    width: '700px',
-    height: '600px',
+    width: '850px',
+    height: '700px',
   },
 };
 
 function BorrowModal() {
-  const [productList, setProductList] = useState([]);
-  const [selectedProductIdList, setSelectedProductIdList] = useState([1, 2]);
+  const [selectedList, setSelectedList] = useState([]);
   const { student, setCurrentModal } = useContext(StudentPageContext);
   const studentId = student.id;
 
   useEffect(() => {
-    ipcRenderer.send('FindAllProduct');
-    ipcRenderer.on('Reply_FindAllProduct', (event, payload) => {
-      const parsedPayload = JSON.parse(payload);
-      setProductList(parsedPayload);
-    });
-  }, []);
-
-  const addBorrowList = () => {
-    ipcRenderer.send(
-      'AddBorrowList',
-      JSON.stringify({
-        studentId,
-        productList: selectedProductIdList,
-      }),
-    );
-    ipcRenderer.on('Reply_AddBorrowList', event => {
-      setCurrentModal(MODAL_LIST.NONE);
-    });
-  };
+    console.log(selectedList);
+  }, [selectedList]);
 
   return (
     <Modal
@@ -49,11 +31,35 @@ function BorrowModal() {
       }}
     >
       <div className={styles.borrowModal}>
-        <ProductSelecter productList={productList} />
-        <ConfirmButton onClickEvent={addBorrowList} />
+        <ProductSelecter
+          selectedList={selectedList}
+          setSelectedList={setSelectedList}
+        />
+        <ConfirmButton
+          onClickEvent={async () => {
+            await addBorrowList(studentId, selectedList);
+            setCurrentModal(MODAL_LIST.NONE);
+            window.location.reload();
+          }}
+        />
       </div>
     </Modal>
   );
+}
+
+async function addBorrowList(studentId, selectedList) {
+  await new Promise(resolve => {
+    ipcRenderer.send(
+      'AddBorrowList',
+      JSON.stringify({
+        studentId,
+        productList: selectedList,
+      }),
+    );
+    ipcRenderer.on('Reply_AddBorrowList', event => {
+      resolve();
+    });
+  });
 }
 
 export default BorrowModal;
