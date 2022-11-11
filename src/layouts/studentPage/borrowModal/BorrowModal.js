@@ -1,8 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
 import StudentPageContext from 'context/StudentPageContext';
+import Modal from 'components/modal/Modal';
 import ProductSelecter from 'layouts/studentPage/borrowModal/ProductSelecter';
 import ConfirmButton from 'layouts/studentPage/borrowModal/ConfirmButton';
-import Modal from 'components/modal/Modal';
+import ModalHeader from 'layouts/studentPage/borrowModal/ModalHeader';
 import styles from './BorrowModal.module.css';
 import MODAL_LIST from 'constant/MODAL';
 
@@ -24,13 +25,9 @@ function BorrowModal() {
   }, [selectedList]);
 
   return (
-    <Modal
-      style={customStyles}
-      closeModal={() => {
-        setCurrentModal(MODAL_LIST.NONE);
-      }}
-    >
+    <Modal style={customStyles}>
       <div className={styles.borrowModal}>
+        <ModalHeader setCurrentModal={setCurrentModal} />
         <ProductSelecter
           selectedList={selectedList}
           setSelectedList={setSelectedList}

@@ -1,0 +1,24 @@
+.modalHeader {
+  width: 100%;
+  margin-right: 4px;
+  text-align: right;
+}
+
+.modalCloseButton {
+  width: 30px;
+  height: 30px;
+  padding-top: 1px;
+  background: none;
+  border: none;
+  border-radius: 100%;
+  color: #e74a3b;
+  font-size: 26px;
+  font-family: 'maplestoryBold';
+  text-align: center;
+  cursor: pointer;
+}
+
+.modalCloseButton:hover {
+  background-color: #e74a3b;
+  color: #ffffff;
+}

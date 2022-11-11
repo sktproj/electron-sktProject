@@ -1,21 +1,28 @@
 import styles from './Button.module.css';
 import styled from 'styled-components';
 
+const Btn = styled.button`
+  width: ${props => props.width};
+  height: ${props => props.height};
+  border: 2px solid ${props => props.color};
+  color: ${props => props.color};
+  font-size: ${props => props.fontSize};
+
+  &:hover {
+    background-color: ${props => props.color};
+  }
+`;
+
 function Button(props) {
-  const Btn = styled.button`
-    width: ${props.width};
-    height: ${props.height};
-    border: 2px solid ${props.color};
-    color: ${props.color};
-    font-size: ${props.fontSize};
-
-    &:hover {
-      background-color: ${props.color};
-    }
-  `;
-
   return (
-    <Btn className={styles.button} onClick={props.onClickEvent}>
+    <Btn
+      width={props.width}
+      height={props.height}
+      color={props.color}
+      fontSize={props.fontSize}
+      className={styles.button}
+      onClick={props.onClickEvent}
+    >
       {props.children}
     </Btn>
   );

@@ -1,5 +1,4 @@
 import ReactModal from 'react-modal';
-
 import styles from './Modal.module.css';
 
 ReactModal.setAppElement('#root');
@@ -14,23 +13,13 @@ const customStyles = {
   },
 };
 
-function Modal(props) {
+function Modal({ style, children }) {
   return (
     <ReactModal
       isOpen={true}
-      style={{ content: { ...customStyles.content, ...props.style.content } }}
+      style={{ content: { ...customStyles.content, ...style.content } }}
     >
-      <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          <button
-            className={styles.modalCloseButton}
-            onClick={props.closeModal}
-          >
-            X
-          </button>
-        </div>
-        <div className={styles.modalArticle}>{props.children}</div>
-      </div>
+      {children}
     </ReactModal>
   );
 }
