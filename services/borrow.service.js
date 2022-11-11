@@ -4,7 +4,7 @@ const DateUtil = require('../utils/Date');
 
 class BorrowService {
   static async findByStudentIdJoinProduct(studentId) {
-    return await BorrowRepository.joinProductBystudentId(studentId);
+    return await BorrowRepository.findByStudentIdJoinProduct(studentId);
   }
 
   static async findByStudentIdAndBorrowingJoinProduct(studentId) {

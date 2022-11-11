@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import StudentPageContext from 'context/StudentPageContext';
 import Table from 'components/table/Table';
 import FILTER_LIST from 'constant/FILTER';
-import TableBodyAPI from 'layouts/studentPage/Table/TableBodyAPI';
+import TableBodyAPI from 'layouts/studentPage/Table/BorrowTableBodyAPI';
 
 function TableBody({ currentFilter }) {
   const [rowList, setRowList] = useState([]);

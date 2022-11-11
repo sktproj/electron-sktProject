@@ -3,7 +3,7 @@ const { Borrow, Product } = require('../models');
 const { Op } = require('sequelize');
 
 class BorrowRepository {
-  static async fintByStudentIdJoinProduct(studentId) {
+  static async findByStudentIdJoinProduct(studentId) {
     const borrowProductList = await Borrow.findAll({
       include: [{ model: Product }],
       where: { studentId },
