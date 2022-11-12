@@ -15,28 +15,32 @@ function ProductSelecter({ selectedList, setSelectedList }) {
   }, []);
 
   return (
-    <div className={styles.selecters}>
-      {productList.map((product, index) => {
-        const { id, name } = product;
-        const isSelectProduct = selectedList.indexOf(id) !== -1 ? true : false;
-        return (
-          <button
-            key={index}
-            className={`${styles.selecter} ${
-              isSelectProduct ? styles.selected : null
-            }`}
-            onClick={() => {
-              isSelectProduct
-                ? setSelectedList(prev =>
-                    prev.filter(selected => selected !== id),
-                  )
-                : setSelectedList(prev => [...prev, id]);
-            }}
-          >
-            {name}
-          </button>
-        );
-      })}
+    <div className={styles.container}>
+      <div className={styles.selecters}>
+        {productList.map((product, index) => {
+          const { id, name } = product;
+          const isSelectProduct =
+            selectedList.indexOf(id) !== -1 ? true : false;
+          return (
+            <button
+              style={{ fontSize: `${34 - name.length * 2}px` }}
+              key={index}
+              className={`${styles.selecter} ${
+                isSelectProduct ? styles.selected : null
+              }`}
+              onClick={() => {
+                isSelectProduct
+                  ? setSelectedList(prev =>
+                      prev.filter(selected => selected !== id),
+                    )
+                  : setSelectedList(prev => [...prev, id]);
+              }}
+            >
+              {name}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

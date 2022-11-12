@@ -26,7 +26,7 @@ function TableBody(props) {
       <tbody className={styles.tableBody}>
         {props.rowList.map((row, index) => {
           return (
-            <tr key={index}>
+            <tr key={index} className={styles.tr}>
               {row.map((rowData, index) => {
                 return (
                   <Td

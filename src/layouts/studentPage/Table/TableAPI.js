@@ -3,7 +3,7 @@ import DateUtil from 'utils/Date';
 
 const { ipcRenderer } = window.require('electron');
 
-class TableBodyAPI {
+class TableAPI {
   static getBorrowListFilterBorrow(studentId) {
     return new Promise(resolve => {
       ipcRenderer.send('GetBorrowListFilterBorrow', JSON.stringify(studentId));
@@ -69,6 +69,19 @@ class TableBodyAPI {
       </Button>
     );
   }
+
+  static async getReturnProductList(studentId) {
+    return new Promise(resolve => {
+      const stringifiedStudentId = JSON.stringify(studentId);
+      ipcRenderer.send('GetReturnProductListByStudentId', stringifiedStudentId);
+      ipcRenderer.on(
+        'Reply_GetReturnProductListByStudentId',
+        (event, payload) => {
+          resolve(JSON.parse(payload));
+        },
+      );
+    });
+  }
 }
 
-export default TableBodyAPI;
+export default TableAPI;

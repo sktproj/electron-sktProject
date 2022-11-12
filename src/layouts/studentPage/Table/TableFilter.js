@@ -1,8 +1,8 @@
 import styles from './TableFilter.module.css';
-import FILTER_LIST from 'constant/FILTER';
+import TABLE from 'constant/TABLE';
 
 function TableFilter({ currentFilter, setCurrentFilter }) {
-  const filterListArr = Object.values(FILTER_LIST);
+  const filterListArr = Object.values(TABLE.FILTER_LIST);
 
   return (
     <div className={styles.filters}>

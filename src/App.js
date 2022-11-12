@@ -1,4 +1,6 @@
+import Header from 'components/header/Header';
 import StudentPage from 'pages/StudentPage';
+import styles from './App.module.css';
 
 function App() {
   const studentData = {
@@ -10,9 +12,10 @@ function App() {
   };
 
   return (
-    <>
+    <div className={styles.root}>
+      <Header />
       <StudentPage student={studentData} />
-    </>
+    </div>
   );
 }
 

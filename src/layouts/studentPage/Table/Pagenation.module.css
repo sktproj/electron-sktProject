@@ -1,0 +1,20 @@
+.pagenation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.item {
+  margin-left: 30px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-family: 'maplestoryLight';
+  color: #555555;
+  cursor: pointer;
+}
+
+.selected {
+  color: #4e73df;
+}

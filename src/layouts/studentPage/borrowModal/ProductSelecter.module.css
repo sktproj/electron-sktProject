@@ -1,18 +1,21 @@
-.selecters {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+.container {
   width: 95%;
   height: 500px;
   margin-bottom: 20px;
   padding: 20px;
   border: 2px solid #e2e2e2;
-  border-right: none;
-  overflow-y: scroll;
+  border-radius: 20px;
+  overflow-y: auto;
+}
+
+.selecters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
 }
 
 .selecters::-webkit-scrollbar {
-  width: 2px;
+  display: none;
 }
 
 .selecters::-webkit-scrollbar-thumb {
@@ -24,13 +27,13 @@
 }
 
 .selecter {
-  height: 45px;
+  height: 70px;
+  padding: 10px;
   background: none;
   background-color: #ffffff;
   border: 2px solid #36b9cc;
   border-radius: 10px;
   color: #36b9cc;
-  font-size: 28px;
   font-family: 'maplestoryLight';
   cursor: pointer;
 }
