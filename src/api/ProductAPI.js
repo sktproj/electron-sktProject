@@ -18,6 +18,18 @@ class ProductAPI {
       });
     });
   }
+
+  static changeStatusToDeleted(productId) {
+    return new Promise(resolve => {
+      ipcRenderer.send(
+        'UpdateProduct',
+        JSON.stringify({ productId, updatedData: { deleted: true } }),
+      );
+      ipcRenderer.on('Reply_UpdateProduct', (event, payload) => {
+        resolve();
+      });
+    });
+  }
 }
 
 export default ProductAPI;

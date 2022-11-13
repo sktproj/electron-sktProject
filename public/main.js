@@ -54,6 +54,14 @@ ipcMain.on('AddProduct', async (event, payload) => {
   event.reply('Reply_AddProduct');
 });
 
+// change product status to delete
+ipcMain.on('UpdateProduct', async (event, payload) => {
+  const ProductService = require('../services/product.service');
+  const { productId, updatedData } = JSON.parse(payload);
+  await ProductService.update(productId, updatedData);
+  event.reply('Reply_UpdateProduct');
+});
+
 // get borrow list
 ipcMain.on('GetBorrowListFilterBorrow', async (event, payload) => {
   const BorrowService = require('../services/borrow.service');

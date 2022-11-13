@@ -5,7 +5,7 @@ import BorrowAPI from 'api/BorrowAPI';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 function ConfirmButton({ selectedList }) {
-  const { student, setCurrentModal } = useContext(AppContext);
+  const { student, setCurrentModal, reload } = useContext(AppContext);
   const studentId = student.id;
 
   return (
@@ -17,7 +17,7 @@ function ConfirmButton({ selectedList }) {
       onClickEvent={async () => {
         await BorrowAPI.addBorrow(studentId, selectedList);
         setCurrentModal(KIND_OF_MODAL.NONE);
-        window.location.reload();
+        reload();
       }}
     >
       확인

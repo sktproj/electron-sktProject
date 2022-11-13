@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import AppContext from 'context/AppContext';
 import Header from 'layouts/app/header/Header';
 import HomePage from 'pages/homePage/HomePage';
@@ -20,6 +20,8 @@ const studentData = {
 };
 
 function App() {
+  const [update, updateState] = useState();
+  const reload = useCallback(() => updateState({}), []);
   const [currentPage, setCurrentPage] = useState(KIND_OF_PAGE.STUDENT);
   const [currentModal, setCurrentModal] = useState(KIND_OF_MODAL.NONE);
 
@@ -30,6 +32,8 @@ function App() {
         currentModal,
         setCurrentModal,
         setCurrentPage,
+        update,
+        reload,
       }}
     >
       <div className={styles.root}>

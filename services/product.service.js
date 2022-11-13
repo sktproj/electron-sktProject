@@ -9,6 +9,10 @@ class ProductService {
   static async create(name) {
     await ProductRepository.create(name);
   }
+
+  static async update(id, updatedData) {
+    await ProductRepository.update(id, updatedData);
+  }
 }
 
 module.exports = ProductService;

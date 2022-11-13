@@ -8,7 +8,7 @@ import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 function ProductManager() {
   const [productList, setProductList] = useState([]);
-  const { currentModal } = useContext(AppContext);
+  const { currentModal, update } = useContext(AppContext);
 
   useEffect(() => {
     if (currentModal === KIND_OF_MODAL.NONE) {
@@ -16,7 +16,7 @@ function ProductManager() {
         setProductList(await ProductAPI.findAllProduct());
       })();
     }
-  }, [currentModal]);
+  }, [currentModal, update]);
 
   return (
     <div className={styles.productManager}>
