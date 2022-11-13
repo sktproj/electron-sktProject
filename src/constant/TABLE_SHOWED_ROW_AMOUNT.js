@@ -1,0 +1,3 @@
+const TABLE_SHOWED_ROW_AMOUNT = 7;
+
+export default TABLE_SHOWED_ROW_AMOUNT;

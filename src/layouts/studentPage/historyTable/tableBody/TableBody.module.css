@@ -1,0 +1,29 @@
+.table {
+  width: 100%;
+  border-top: 1px solid #e2e2e2;
+  border-collapse: collapse;
+  font-family: 'maplestoryLight';
+  text-align: center;
+}
+
+.th,
+.td {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.th {
+  padding: 10px;
+  font-size: 24px;
+  color: #555555;
+  font-weight: 100;
+}
+
+.tr {
+  height: 85px;
+}
+
+.td {
+  padding: 20px 10px 20px 10px;
+  font-size: 20px;
+  color: #919191;
+}

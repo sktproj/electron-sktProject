@@ -46,6 +46,14 @@ ipcMain.on('FindAllProduct', async event => {
   event.reply('Reply_FindAllProduct', JSON.stringify(allProductist));
 });
 
+// add product
+ipcMain.on('AddProduct', async (event, payload) => {
+  const ProductService = require('../services/product.service');
+  const productName = JSON.parse(payload);
+  await ProductService.create(productName);
+  event.reply('Reply_AddProduct');
+});
+
 // get borrow list
 ipcMain.on('GetBorrowListFilterBorrow', async (event, payload) => {
   const BorrowService = require('../services/borrow.service');

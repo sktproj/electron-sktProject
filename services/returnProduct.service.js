@@ -9,7 +9,6 @@ class ReturnProductService {
     );
 
     const processedReturnProductList = returnProductList.map(returnProduct => {
-      console.log(returnProduct.Product.name);
       const name = returnProduct.Product.name;
       const { borrowDate, returnDate, overdueDay } = returnProduct;
 

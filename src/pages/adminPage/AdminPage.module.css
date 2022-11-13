@@ -1,0 +1,6 @@
+.adminPage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin-top: 50px;
+}

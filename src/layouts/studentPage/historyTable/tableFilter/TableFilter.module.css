@@ -1,0 +1,7 @@
+.tableFilter {
+  display: flex;
+  align-items: center;
+  height: 75px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #c5c5c5;
+}

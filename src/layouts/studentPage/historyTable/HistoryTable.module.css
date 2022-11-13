@@ -1,0 +1,10 @@
+.historyTable {
+  grid-area: historyTable;
+  display: grid;
+  grid-template-rows: 75px minmax(644px, 1fr) 50px;
+  row-gap: 30px;
+  padding: 20px 50px 20px 50px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 0px 18px;
+}

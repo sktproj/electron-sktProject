@@ -1,0 +1,21 @@
+.selectButton {
+  height: 70px;
+  padding: 10px;
+  background: none;
+  background-color: #ffffff;
+  border: 2px solid #36b9cc;
+  border-radius: 10px;
+  color: #36b9cc;
+  font-family: 'maplestoryLight';
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #36b9cc;
+  color: #ffffff;
+}
+
+.selecter:hover {
+  background-color: #36b9cc;
+  color: #ffffff;
+}

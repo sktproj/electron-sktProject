@@ -1,25 +1,25 @@
 import { useContext } from 'react';
-import StudentPageContext from 'context/StudentPageContext';
-import Button from 'components/button/Button';
+import AppContext from 'context/AppContext';
+import CustomButton from 'components/customButton/CustomButton';
 import styles from './BorrowButton.module.css';
-import MODAL_LIST from 'constant/MODAL';
+import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 function BorrowButton() {
-  const { setCurrentModal } = useContext(StudentPageContext);
+  const { setCurrentModal } = useContext(AppContext);
 
   return (
     <div className={styles.borrowButton}>
-      <Button
+      <CustomButton
         width="100%"
         height="90%"
         fontSize="38px"
         color="#4e73df"
         onClickEvent={() => {
-          setCurrentModal(MODAL_LIST.BORROW_MODAL);
+          setCurrentModal(KIND_OF_MODAL.BORROW_MODAL);
         }}
       >
         물품 빌리기
-      </Button>
+      </CustomButton>
     </div>
   );
 }

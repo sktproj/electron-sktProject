@@ -5,6 +5,10 @@ class ProductService {
     const allProductList = await ProductRepository.findAll();
     return allProductList;
   }
+
+  static async create(name) {
+    await ProductRepository.create(name);
+  }
 }
 
 module.exports = ProductService;
