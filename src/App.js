@@ -11,6 +11,8 @@ import KIND_OF_PAGE from 'constant/KIND_OF_PAGE';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 import styles from './App.module.css';
 
+const { ipcRenderer } = window.require('electron');
+
 const studentData = {
   id: 123456,
   grade: 3,
@@ -24,6 +26,10 @@ function App() {
   const reload = useCallback(() => updateState({}), []);
   const [currentPage, setCurrentPage] = useState(KIND_OF_PAGE.STUDENT);
   const [currentModal, setCurrentModal] = useState(KIND_OF_MODAL.NONE);
+
+  ipcRenderer.on('ScanningStudentCard', (event, payload) => {
+    console.log(JSON.parse(payload));
+  });
 
   return (
     <AppContext.Provider

@@ -11,6 +11,9 @@ const { ipcMain } = require('electron');
 require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 require('../models').sequelize.sync();
 
+const { SerialPort } = require('serialport');
+const serialport = new SerialPort({ path: 'COM3', baudRate: 9600 });
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200,
@@ -28,6 +31,14 @@ function createWindow() {
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`,
   );
+
+  serialport.on('open', () => {
+    console.log('serialport open');
+    serialport.on('data', data => {
+      console.log(data[0]);
+      win.webContents.send('ScanningStudentCard', JSON.stringify(data[0]));
+    });
+  });
 
   remote.enable(win.webContents);
 }
