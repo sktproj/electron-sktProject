@@ -7,34 +7,41 @@ import AdminPage from 'pages/adminPage/AdminPage';
 import BorrowModal from 'modal/borrowModal/BorrowModal';
 import AddProductModal from 'modal/addProductModal/AddProductModal';
 import AdminAuthModal from 'modal/adminAuth/AdminAuthModal';
+import InputStudentInfoModal from 'modal/inputStudentInfo/InputStudentInfoModal';
 import KIND_OF_PAGE from 'constant/KIND_OF_PAGE';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 import styles from './App.module.css';
 
 const { ipcRenderer } = window.require('electron');
 
-const studentData = {
-  id: 123456,
-  grade: 3,
-  classNM: 5,
-  name: '신재훈',
-  overdue: 999,
-};
+// const studentData = {
+//   id: 123456,
+//   grade: 3,
+//   classNM: 5,
+//   name: '신재훈',
+//   overdue: 999,
+// };
 
 function App() {
   const [update, updateState] = useState();
   const reload = useCallback(() => updateState({}), []);
-  const [currentPage, setCurrentPage] = useState(KIND_OF_PAGE.STUDENT);
+  const [currentPage, setCurrentPage] = useState(KIND_OF_PAGE.HOME);
   const [currentModal, setCurrentModal] = useState(KIND_OF_MODAL.NONE);
-
-  ipcRenderer.on('ScanningStudentCard', (event, payload) => {
-    console.log(JSON.parse(payload));
+  const [studentData, setStudentData] = useState({
+    id: null,
+    grade: null,
+    classNM: null,
+    name: null,
+    overdue: null,
   });
+
+  ipcRenderer.on('ScanningStudentCard', (event, payload) => {});
 
   return (
     <AppContext.Provider
       value={{
         student: studentData,
+        setStudent: setStudentData,
         currentModal,
         setCurrentModal,
         setCurrentPage,
@@ -51,7 +58,7 @@ function App() {
   );
 }
 
-function renderPage(currentPage) {
+function renderPage(currentPage, studentData) {
   switch (currentPage) {
     case KIND_OF_PAGE.HOME:
       return <HomePage />;
@@ -77,6 +84,9 @@ function renderModal(currentModal) {
 
     case KIND_OF_MODAL.ADMIN_AUTH:
       return <AdminAuthModal />;
+
+    case KIND_OF_MODAL.INPUT_STUDENT_MODAL:
+      return <InputStudentInfoModal studentId={studentId} />;
 
     default:
       return null;

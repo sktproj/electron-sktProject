@@ -9,10 +9,10 @@ remote.initialize();
 const { ipcMain } = require('electron');
 
 require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
-require('../models').sequelize.sync();
+require('../models').sequelize.sync({ alter: true });
 
 const { SerialPort } = require('serialport');
-const serialport = new SerialPort({ path: 'COM3', baudRate: 9600 });
+const serialport = new SerialPort({ path: 'COM4', baudRate: 9600 });
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -33,10 +33,12 @@ function createWindow() {
   );
 
   serialport.on('open', () => {
-    console.log('serialport open');
-    serialport.on('data', data => {
-      console.log(data[0]);
-      win.webContents.send('ScanningStudentCard', JSON.stringify(data[0]));
+    serialport.on('data', async data => {
+      const studentCardId = data.toString('utf8');
+      const StudentService = require('../services/student.service');
+      const studentData = await StudentService.findById(studentCardId);
+
+      win.webContents.send('ScanningStudentCard', JSON.stringify(studentData));
     });
   });
 
@@ -48,6 +50,14 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+// create student
+ipcMain.on('CreateStudent', async (event, payload) => {
+  const StudentService = require('../services/student.service');
+  const createdStudentData = JSON.parse(payload);
+  await StudentService.create(createdStudentData);
+  event.reply('Reply_CreateStudent');
 });
 
 // find all product

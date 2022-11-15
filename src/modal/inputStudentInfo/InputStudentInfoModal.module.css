@@ -1,0 +1,14 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.input {
+  width: 200px;
+  height: 45px;
+  font-size: 22px;
+  font-family: 'maplestoryLight';
+}

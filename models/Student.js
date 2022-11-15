@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
       grade: {
         allowNull: false,
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       overdue: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
     },
     {
