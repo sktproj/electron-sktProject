@@ -14,12 +14,14 @@ function AddButton({ productName }) {
       color={'#4e73df'}
       fontSize={'24px'}
       onClickEvent={async () => {
+        console.log(productName);
         if (productName.length === 0) {
           setCurrentModal(KIND_OF_MODAL.NONE);
           return;
         }
         await ProductAPI.addProduct(productName);
         setCurrentModal(KIND_OF_MODAL.NONE);
+        window.location.reload();
       }}
     >
       추가

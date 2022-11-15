@@ -9,7 +9,7 @@ remote.initialize();
 const { ipcMain } = require('electron');
 
 require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
-require('../models').sequelize.sync({ alter: true });
+require('../models').sequelize.sync();
 
 const { SerialPort } = require('serialport');
 const serialport = new SerialPort({ path: 'COM4', baudRate: 9600 });
@@ -34,11 +34,14 @@ function createWindow() {
 
   serialport.on('open', () => {
     serialport.on('data', async data => {
-      const studentCardId = data.toString('utf8');
+      const cardId = data.toString('utf8');
       const StudentService = require('../services/student.service');
-      const studentData = await StudentService.findById(studentCardId);
+      const studentData = await StudentService.findById(cardId);
 
-      win.webContents.send('ScanningStudentCard', JSON.stringify(studentData));
+      win.webContents.send(
+        'ScanningCard',
+        JSON.stringify({ cardId, studentData }),
+      );
     });
   });
 
@@ -84,6 +87,12 @@ ipcMain.on('UpdateProduct', async (event, payload) => {
 });
 
 // get borrow list
+ipcMain.on('GetBorrowListAll', async (event, payload) => {
+  const BorrowService = require('../services/borrow.service');
+  const borrowList = await BorrowService.findByStudentId(JSON.parse(payload));
+  event.reply('Reply_GetBorrowListAll', JSON.stringify(borrowList));
+});
+
 ipcMain.on('GetBorrowListFilterBorrow', async (event, payload) => {
   const BorrowService = require('../services/borrow.service');
   const borrowList = await BorrowService.findByStudentIdAndBorrowingJoinProduct(

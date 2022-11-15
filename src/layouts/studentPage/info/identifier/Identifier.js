@@ -1,10 +1,22 @@
-import { useContext } from 'react';
-import AppContext from 'context/AppContext';
+import { useEffect, useState } from 'react';
 import styles from './Identifier.module.css';
+import URLUtil from 'utils/URL';
 
 function Identifier() {
-  const { student } = useContext(AppContext);
-  const { grade, classNM, name } = student;
+  const [grade, setGrade] = useState('');
+  const [classNM, setClassNM] = useState('');
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    const { grade, classNM, name } = URLUtil.getQueryParams([
+      'grade',
+      'classNM',
+      'name',
+    ]);
+    setGrade(grade);
+    setClassNM(classNM);
+    setName(name);
+  }, []);
 
   return (
     <div className={styles.id}>

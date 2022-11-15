@@ -3,6 +3,10 @@ const BorrowRepository = require('../repositories/borrow.repository');
 const DateUtil = require('../utils/Date');
 
 class BorrowService {
+  static async findByStudentId(studentId) {
+    return await BorrowRepository.findByStudentId(studentId);
+  }
+
   static async findByStudentIdAndBorrowingJoinProduct(studentId) {
     return await BorrowRepository.findByStudentIdAndReturnDueDateGTEJoinProduct(
       studentId,

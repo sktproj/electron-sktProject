@@ -1,13 +1,13 @@
-import { useContext } from 'react';
-import AppContext from 'context/AppContext';
 import PageButton from './pageButton/PageButton';
 import styles from './Header.module.css';
 import homePageButtonImg from 'image/home_page_button_img.png';
 import admintPageButtonImg from 'image/admin_page_button_img.png';
 import KIND_OF_PAGE from 'constant/KIND_OF_PAGE';
+import { useContext } from 'react';
+import AppContext from 'context/AppContext';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
-function Header({ currentPage, setCurrentPage }) {
+function Header({ currentPage }) {
   const { setCurrentModal } = useContext(AppContext);
 
   return (
@@ -16,7 +16,7 @@ function Header({ currentPage, setCurrentPage }) {
         isHidden={currentPage === KIND_OF_PAGE.HOME ? true : false}
         image={homePageButtonImg}
         onClickEvent={() => {
-          setCurrentPage(KIND_OF_PAGE.HOME);
+          window.location.hash = '/';
         }}
       />
       <PageButton

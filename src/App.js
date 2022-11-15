@@ -1,80 +1,58 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import AppContext from 'context/AppContext';
 import Header from 'layouts/app/header/Header';
-import HomePage from 'pages/homePage/HomePage';
-import StudentPage from 'pages/studentPage/StudentPage';
-import AdminPage from 'pages/adminPage/AdminPage';
 import BorrowModal from 'modal/borrowModal/BorrowModal';
 import AddProductModal from 'modal/addProductModal/AddProductModal';
 import AdminAuthModal from 'modal/adminAuth/AdminAuthModal';
 import InputStudentInfoModal from 'modal/inputStudentInfo/InputStudentInfoModal';
-import KIND_OF_PAGE from 'constant/KIND_OF_PAGE';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 import styles from './App.module.css';
+import HomePage from 'pages/homePage/HomePage';
+import StudentPage from 'pages/studentPage/StudentPage';
+import AdminPage from 'pages/adminPage/AdminPage';
 
 const { ipcRenderer } = window.require('electron');
 
-// const studentData = {
-//   id: 123456,
-//   grade: 3,
-//   classNM: 5,
-//   name: '신재훈',
-//   overdue: 999,
-// };
-
 function App() {
-  const [update, updateState] = useState();
-  const reload = useCallback(() => updateState({}), []);
-  const [currentPage, setCurrentPage] = useState(KIND_OF_PAGE.HOME);
   const [currentModal, setCurrentModal] = useState(KIND_OF_MODAL.NONE);
-  const [studentData, setStudentData] = useState({
-    id: null,
-    grade: null,
-    classNM: null,
-    name: null,
-    overdue: null,
+  const [studentCardId, setStudentCardId] = useState('');
+
+  ipcRenderer.on('ScanningCard', (event, payload) => {
+    const { cardId, studentData } = JSON.parse(payload);
+    if (studentData) {
+      const { id, grade, classNM, name } = studentData;
+      window.location.hash = `/student?id=${id}&grade=${grade}&classNM=${classNM}&name=${name}`;
+      return;
+    }
+
+    setStudentCardId(cardId);
+    setCurrentModal(KIND_OF_MODAL.INPUT_STUDENT_INFO_MODAL);
   });
 
-  ipcRenderer.on('ScanningStudentCard', (event, payload) => {});
-
   return (
-    <AppContext.Provider
-      value={{
-        student: studentData,
-        setStudent: setStudentData,
-        currentModal,
-        setCurrentModal,
-        setCurrentPage,
-        update,
-        reload,
-      }}
-    >
-      <div className={styles.root}>
-        <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
-        {renderPage(currentPage, studentData)}
-        {renderModal(currentModal)}
-      </div>
-    </AppContext.Provider>
+    <HashRouter>
+      <AppContext.Provider
+        value={{
+          setCurrentModal,
+        }}
+      >
+        <div className={styles.root}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/studentAuth" element={<AdminPage />} />
+            <Route path="/student" element={<StudentPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+          </Routes>
+          {renderModal(currentModal, studentCardId)}
+        </div>
+      </AppContext.Provider>
+    </HashRouter>
   );
 }
 
-function renderPage(currentPage, studentData) {
-  switch (currentPage) {
-    case KIND_OF_PAGE.HOME:
-      return <HomePage />;
-
-    case KIND_OF_PAGE.STUDENT:
-      return <StudentPage student={studentData} />;
-
-    case KIND_OF_PAGE.ADMIN:
-      return <AdminPage />;
-
-    default:
-      return null;
-  }
-}
-
-function renderModal(currentModal) {
+function renderModal(currentModal, studentCardId) {
   switch (currentModal) {
     case KIND_OF_MODAL.BORROW_MODAL:
       return <BorrowModal />;
@@ -85,8 +63,8 @@ function renderModal(currentModal) {
     case KIND_OF_MODAL.ADMIN_AUTH:
       return <AdminAuthModal />;
 
-    case KIND_OF_MODAL.INPUT_STUDENT_MODAL:
-      return <InputStudentInfoModal studentId={studentId} />;
+    case KIND_OF_MODAL.INPUT_STUDENT_INFO_MODAL:
+      return <InputStudentInfoModal studentCardId={studentCardId} />;
 
     default:
       return null;

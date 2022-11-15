@@ -4,7 +4,7 @@ const KIND_OF_MODAL = {
   RETURN_MODAL: 'returnModal',
   ADD_PRODUCT_MODAL: 'addProductModal',
   ADMIN_AUTH: 'adminAuth',
-  INPUT_STUDENT_MODAL: 'inputStudentModal',
+  INPUT_STUDENT_INFO_MODAL: 'inputStudentInfoModal',
 };
 
 export default KIND_OF_MODAL;

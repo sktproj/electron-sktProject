@@ -1,10 +1,7 @@
 import ProductAPI from 'api/ProductAPI';
-import AppContext from 'context/AppContext';
-import { useContext } from 'react';
 import styles from './ProductWidget.module.css';
 
 function ProductWidget({ id, name }) {
-  const { reload } = useContext(AppContext);
   const fontSize = 40 - name.length * 2;
 
   return (
@@ -19,7 +16,7 @@ function ProductWidget({ id, name }) {
         className={styles.deleteButton}
         onClick={async () => {
           await ProductAPI.changeStatusToDeleted(id);
-          reload();
+          window.location.reload();
         }}
       >
         삭제

@@ -6,7 +6,7 @@ class StudentRepository {
     return student;
   }
 
-  static async findById(createdStudentData) {
+  static async create(createdStudentData) {
     await Student.create({ ...createdStudentData });
   }
 }

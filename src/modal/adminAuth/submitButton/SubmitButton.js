@@ -15,8 +15,9 @@ function SubmitButton({ password, setIsFailed }) {
       fontSize={'24px'}
       onClickEvent={() => {
         if (password === 'okdongMidmaP1!') {
+          window.location.hash = '/admin';
           setCurrentModal(KIND_OF_MODAL.NONE);
-          setCurrentPage(KIND_OF_PAGE.ADMIN);
+          return;
         }
         setIsFailed(true);
       }}

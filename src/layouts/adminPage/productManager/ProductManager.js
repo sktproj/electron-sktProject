@@ -1,22 +1,17 @@
-import { useState, useEffect, useContext } from 'react';
-import AppContext from 'context/AppContext';
+import { useState, useEffect } from 'react';
 import ProductWidget from './productWidget/ProductWidget';
 import AddProductButton from './addProductButton/AddProductButton';
 import ProductAPI from 'api/ProductAPI.js';
 import styles from './ProductManager.module.css';
-import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 function ProductManager() {
   const [productList, setProductList] = useState([]);
-  const { currentModal, update } = useContext(AppContext);
 
   useEffect(() => {
-    if (currentModal === KIND_OF_MODAL.NONE) {
-      (async () => {
-        setProductList(await ProductAPI.findAllProduct());
-      })();
-    }
-  }, [currentModal, update]);
+    (async () => {
+      setProductList(await ProductAPI.findAllProduct());
+    })();
+  }, []);
 
   return (
     <div className={styles.productManager}>

@@ -8,6 +8,7 @@
   color: #36b9cc;
   font-family: 'maplestoryLight';
   cursor: pointer;
+  word-break: keep-all;
 }
 
 .selected {

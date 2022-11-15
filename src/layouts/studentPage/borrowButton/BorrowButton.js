@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import AppContext from 'context/AppContext';
 import CustomButton from 'components/customButton/CustomButton';
 import styles from './BorrowButton.module.css';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
+import AppContext from 'context/AppContext';
 
 function BorrowButton() {
   const { setCurrentModal } = useContext(AppContext);

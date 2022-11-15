@@ -1,6 +1,15 @@
 const { ipcRenderer } = window.require('electron');
 
 class BorrowAPI {
+  static getBorrowListAll(studentId) {
+    return new Promise(resolve => {
+      ipcRenderer.send('GetBorrowListAll', JSON.stringify(studentId));
+      ipcRenderer.on('Reply_GetBorrowListAll', (event, payload) => {
+        resolve(JSON.parse(payload));
+      });
+    });
+  }
+
   static getBorrowListFilterBorrow(studentId) {
     return new Promise(resolve => {
       ipcRenderer.send('GetBorrowListFilterBorrow', JSON.stringify(studentId));

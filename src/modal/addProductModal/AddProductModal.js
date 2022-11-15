@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomModal from 'components/customModal/CustomModal';
 import ProductNameInput from './productNameInput/ProductNameInput';
 import AddButton from './addButton/AddButton';
@@ -14,6 +14,10 @@ const customStyles = {
 
 function AddProductModal() {
   const [productName, setProductName] = useState('');
+
+  useEffect(() => {
+    console.log(productName);
+  }, [productName]);
 
   return (
     <CustomModal style={customStyles}>

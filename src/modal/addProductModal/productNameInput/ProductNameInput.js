@@ -1,14 +1,17 @@
-import styles from './ProductNameInput.module.css';
+import CustomInput from 'components/customInput/CustomInput';
 
 function ProductNameInput({ setProductName }) {
   return (
-    <input
+    <CustomInput
+      width="90%"
+      height="50px"
+      fontSize="22px"
+      color="#36b9cc"
       placeholder="물품의 이름을 입력하세요"
-      className={styles.input}
-      onChange={e => {
+      onChangeEvent={e => {
         setProductName(e.target.value);
       }}
-    ></input>
+    ></CustomInput>
   );
 }
 
