@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import TableFilter from './tableFilter/TableFilter';
 import TableBody from './tableBody/TableBody';
 import CustomButton from 'components/customButton/CustomButton';
@@ -6,12 +6,13 @@ import Pagenation from './pagenation/Pagenation';
 import styles from './HistoryTable.module.css';
 import BorrowAPI from 'api/BorrowAPI';
 import ReturnProductAPI from 'api/ReturnProductAPI';
-import DateUtil from 'utils/Date';
 import KIND_OF_TABLE_FILTER from 'constant/KIND_OF_TABLE_FILTER';
 import TABLE_SHOWED_ROW_AMOUNT from 'constant/TABLE_SHOWED_ROW_AMOUNT';
 import URLUtil from 'utils/URL';
+import moment from 'moment';
 
 function HistoryTable() {
+  const [reloadEvent, reload] = useState();
   const [currentFilter, setCurrentFilter] = useState(
     KIND_OF_TABLE_FILTER.BORROW,
   );
@@ -22,10 +23,10 @@ function HistoryTable() {
   useEffect(() => {
     (async () => {
       const studentId = URLUtil.getQueryParam('id');
-      setHistory(await getHistory(currentFilter, studentId));
+      setHistory(await getHistory(currentFilter, studentId, reload));
       setCurrentPage(1);
     })();
-  }, [currentFilter]);
+  }, [currentFilter, reloadEvent]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * TABLE_SHOWED_ROW_AMOUNT;
@@ -52,15 +53,15 @@ function HistoryTable() {
   );
 }
 
-async function getHistory(currentFilter, studentId) {
+async function getHistory(currentFilter, studentId, reload) {
   switch (currentFilter) {
     case KIND_OF_TABLE_FILTER.BORROW:
-      const borrowList = await BorrowAPI.getBorrowListFilterBorrow(studentId);
-      return processBorrowList(borrowList);
+      const borrowList = await BorrowAPI.getBorrowListAll(studentId);
+      return processBorrowList(borrowList, reload);
 
     case KIND_OF_TABLE_FILTER.OVERDUE:
       const overdueList = await BorrowAPI.getBorrowListFilterOverdue(studentId);
-      return processBorrowList(overdueList);
+      return processBorrowList(overdueList, reload);
 
     case KIND_OF_TABLE_FILTER.RETURN:
       return await ReturnProductAPI.getReturnProductList(studentId);
@@ -69,14 +70,11 @@ async function getHistory(currentFilter, studentId) {
   }
 }
 
-function processBorrowList(tableData) {
+function processBorrowList(tableData, reload) {
   return tableData.map(borrow => {
     const productName = borrow.Product.name;
     const { id, borrowDate, returnDueDate } = borrow;
-    let remainingDays = DateUtil.getRemainingDays(
-      DateUtil.getCurrentDate(),
-      returnDueDate,
-    );
+    let remainingDays = moment(returnDueDate).diff(moment(), 'days');
     const remainingReturnDay =
       remainingDays >= 0
         ? remainingDays === 0
@@ -100,7 +98,7 @@ function processBorrowList(tableData) {
         color="#e74a3b"
         onClickEvent={async () => {
           await ReturnProductAPI.returnProduct(id);
-          window.location.reload();
+          reload({});
         }}
       >
         반납

@@ -1,6 +1,5 @@
 const ReturnProductRepository = require('../repositories/returnProduct.repository');
-
-const DateUtil = require('../utils/Date');
+const moment = require('moment');
 
 class ReturnProductService {
   static async findAllByStudentId(studentId) {
@@ -18,13 +17,28 @@ class ReturnProductService {
     return processedReturnProductList;
   }
 
+  static async findAllByStudentIdAndOverduing(studentId) {
+    const returnProductList =
+      await ReturnProductRepository.findAllByStudentIdAndOverduing(studentId);
+
+    const processedReturnProductList = returnProductList.map(returnProduct => {
+      const name = returnProduct.Product.name;
+      const { borrowDate, returnDate, overdueDay } = returnProduct;
+
+      return [name, borrowDate, returnDate, `${overdueDay}일`];
+    });
+
+    return processedReturnProductList;
+  }
+
   static async createOne(returnedProduct) {
     const { studentId, productId, borrowDate, returnDueDate } = returnedProduct;
-    const remainingReturnDay = DateUtil.getRemainingDays(
-      DateUtil.getCurrentDate(),
-      returnDueDate,
+    const diffDate = moment(returnDueDate).diff(
+      moment(moment(), 'YYYY-MM-DD'),
+      'days',
     );
-    const overdueDay = remainingReturnDay >= 0 ? 0 : -remainingReturnDay;
+    const overdueDay = diffDate >= 0 ? 0 : -diffDate;
+    console.log(diffDate, overdueDay);
 
     const returnedProductData = {
       studentId,

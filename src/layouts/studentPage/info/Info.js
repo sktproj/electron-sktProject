@@ -24,10 +24,11 @@ function Info() {
       );
       setOverdueProductAmount(overdueProductList.length);
 
-      const returnProductList = await ReturnProductAPI.getReturnProductList(
-        studentId,
+      const overdueReturnedProductList =
+        await ReturnProductAPI.getReturnProductListFilterOverdue(studentId);
+      setOverdueCount(
+        overdueProductList.length + overdueReturnedProductList.length,
       );
-      setOverdueCount(overdueProductList.length + returnProductList.length);
     })();
   }, []);
 

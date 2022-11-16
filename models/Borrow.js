@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       returnDueDate: {
         type: DataTypes.DATEONLY,
-        defaultValue: literal('(current_date + 7)'),
+        defaultValue: literal('(now() + interval 7 day)'),
       },
     },
     {

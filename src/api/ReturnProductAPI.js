@@ -4,9 +4,22 @@ class ReturnProductAPI {
   static async getReturnProductList(studentId) {
     return new Promise(resolve => {
       const stringifiedStudentId = JSON.stringify(studentId);
-      ipcRenderer.send('GetReturnProductListByStudentId', stringifiedStudentId);
+      ipcRenderer.send('GetReturnProductList', stringifiedStudentId);
+      ipcRenderer.on('Reply_GetReturnProductList', (event, payload) => {
+        resolve(JSON.parse(payload));
+      });
+    });
+  }
+
+  static async getReturnProductListFilterOverdue(studentId) {
+    return new Promise(resolve => {
+      const stringifiedStudentId = JSON.stringify(studentId);
+      ipcRenderer.send(
+        'GetReturnProductListFilterOverdue',
+        stringifiedStudentId,
+      );
       ipcRenderer.on(
-        'Reply_GetReturnProductListByStudentId',
+        'Reply_GetReturnProductListFilterOverdue',
         (event, payload) => {
           resolve(JSON.parse(payload));
         },

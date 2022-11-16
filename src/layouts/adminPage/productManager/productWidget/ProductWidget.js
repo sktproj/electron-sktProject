@@ -1,7 +1,7 @@
 import ProductAPI from 'api/ProductAPI';
 import styles from './ProductWidget.module.css';
 
-function ProductWidget({ id, name }) {
+function ProductWidget({ id, name, reload }) {
   const fontSize = 40 - name.length * 2;
 
   return (
@@ -16,7 +16,7 @@ function ProductWidget({ id, name }) {
         className={styles.deleteButton}
         onClick={async () => {
           await ProductAPI.changeStatusToDeleted(id);
-          window.location.reload();
+          reload({});
         }}
       >
         삭제

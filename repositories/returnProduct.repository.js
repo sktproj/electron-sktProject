@@ -1,10 +1,18 @@
 const { ReturnProduct, Product } = require('../models');
+const { Op } = require('sequelize');
 
 class ReturnProductRepository {
   static async findAllByStudentId(studentId) {
     return await ReturnProduct.findAll({
       include: [{ model: Product }],
       where: { studentId },
+    });
+  }
+
+  static async findAllByStudentIdAndOverduing(studentId) {
+    return await ReturnProduct.findAll({
+      include: [{ model: Product }],
+      where: { [Op.and]: [{ studentId }, { overdueDay: { [Op.gt]: 0 } }] },
     });
   }
 

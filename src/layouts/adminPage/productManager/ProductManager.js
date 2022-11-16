@@ -5,13 +5,14 @@ import ProductAPI from 'api/ProductAPI.js';
 import styles from './ProductManager.module.css';
 
 function ProductManager() {
+  const [reloadEvent, reload] = useState();
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
     (async () => {
       setProductList(await ProductAPI.findAllProduct());
     })();
-  }, []);
+  }, [reloadEvent]);
 
   return (
     <div className={styles.productManager}>
@@ -20,7 +21,12 @@ function ProductManager() {
         <div className={styles.widgetGrid}>
           {productList.map((product, index) => {
             return (
-              <ProductWidget key={index} id={product.id} name={product.name} />
+              <ProductWidget
+                key={index}
+                id={product.id}
+                name={product.name}
+                reload={reload}
+              />
             );
           })}
           <AddProductButton />

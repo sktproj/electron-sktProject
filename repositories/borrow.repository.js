@@ -1,6 +1,6 @@
 const { Borrow, Product } = require('../models');
-
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 class BorrowRepository {
   static async findByStudentId(studentId) {
@@ -12,26 +12,30 @@ class BorrowRepository {
     });
   }
 
-  static async findByStudentIdAndReturnDueDateGTEJoinProduct(
-    studentId,
-    currentDate,
-  ) {
+  static async findByStudentIdAndReturnDueDateGTEJoinProduct(studentId) {
     return await Borrow.findAll({
       include: [{ model: Product }],
       where: {
-        [Op.and]: [{ studentId }, { returnDueDate: { [Op.gte]: currentDate } }],
+        [Op.and]: [
+          { studentId },
+          {
+            returnDueDate: { [Op.gte]: moment(moment(), 'YYYY-MM-DD') },
+          },
+        ],
       },
     });
   }
 
-  static async findByStudentIdAndReturnDueDateLTJoinProduct(
-    studentId,
-    currentDate,
-  ) {
+  static async findByStudentIdAndReturnDueDateLTJoinProduct(studentId) {
     return await Borrow.findAll({
       include: [{ model: Product }],
       where: {
-        [Op.and]: [{ studentId }, { returnDueDate: { [Op.lt]: currentDate } }],
+        [Op.and]: [
+          { studentId },
+          {
+            returnDueDate: { [Op.lt]: moment(moment(), 'YYYY-MM-DD') },
+          },
+        ],
       },
     });
   }

@@ -127,15 +127,24 @@ ipcMain.on('ReturnProduct', async (event, payload) => {
   event.reply('Reply_ReturnProduct');
 });
 
-// get return product list by student id
-ipcMain.on('GetReturnProductListByStudentId', async (event, payload) => {
+// get return product list
+ipcMain.on('GetReturnProductList', async (event, payload) => {
   const ReturnProductService = require('../services/returnProduct.service');
   const studentId = JSON.parse(payload);
   const returnProductList = await ReturnProductService.findAllByStudentId(
     studentId,
   );
+  event.reply('Reply_GetReturnProductList', JSON.stringify(returnProductList));
+});
+
+// get return product list filter overdue
+ipcMain.on('GetReturnProductListFilterOverdue', async (event, payload) => {
+  const ReturnProductService = require('../services/returnProduct.service');
+  const studentId = JSON.parse(payload);
+  const returnProductList =
+    await ReturnProductService.findAllByStudentIdAndOverduing(studentId);
   event.reply(
-    'Reply_GetReturnProductListByStudentId',
+    'Reply_GetReturnProductListFilterOverdue',
     JSON.stringify(returnProductList),
   );
 });

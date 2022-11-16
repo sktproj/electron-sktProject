@@ -1,7 +1,5 @@
 const BorrowRepository = require('../repositories/borrow.repository');
 
-const DateUtil = require('../utils/Date');
-
 class BorrowService {
   static async findByStudentId(studentId) {
     return await BorrowRepository.findByStudentId(studentId);
@@ -10,14 +8,12 @@ class BorrowService {
   static async findByStudentIdAndBorrowingJoinProduct(studentId) {
     return await BorrowRepository.findByStudentIdAndReturnDueDateGTEJoinProduct(
       studentId,
-      DateUtil.getCurrentDate(),
     );
   }
 
   static async findByStudentIdAndOverduingJoinProduct(studentId) {
     return await BorrowRepository.findByStudentIdAndReturnDueDateLTJoinProduct(
       studentId,
-      DateUtil.getCurrentDate(),
     );
   }
 

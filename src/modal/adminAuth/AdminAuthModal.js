@@ -23,6 +23,7 @@ function AdminAuthModal() {
     <CustomModal style={customStyles}>
       <div className={styles.adminAuthModal}>
         <input
+          type="password"
           placeholder="비밀번호를 입력하세요"
           className={`${styles.passwordInput} ${
             isFailed ? styles.failed : null
