@@ -1,4 +1,6 @@
 .productManager {
+  grid-area: productManager;
+  width: 890px;
   height: 850px;
   padding: 20px;
   background-color: #ffffff;
@@ -16,20 +18,16 @@
 }
 
 .widgetList {
-  min-width: 790px;
-  height: 710px;
+  display: grid;
+  grid-template-columns: repeat(4, 160px);
+  grid-template-rows: repeat(4, 128px);
+  column-gap: 50px;
+  row-gap: 40px;
+  height: 722px;
   padding: 20px;
   border: 1px solid #e2e2e2;
   border-radius: 10px;
   overflow: scroll;
-}
-
-.widgetGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 20%);
-  grid-template-rows: repeat(4, 120px);
-  column-gap: 50px;
-  row-gap: 40px;
 }
 
 .widgetList::-webkit-scrollbar {

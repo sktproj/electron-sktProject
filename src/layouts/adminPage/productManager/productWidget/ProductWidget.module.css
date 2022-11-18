@@ -3,13 +3,12 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 150px;
-  height: 120px;
+  width: 160px;
+  height: 128px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 18px;
   text-align: center;
-  word-break: keep-all;
 }
 
 .productName {
@@ -24,6 +23,12 @@
   border-radius: 10px 10px 0px 0px;
   font-family: 'maplestoryLight';
   color: #3d3d3d;
+  word-break: break-all;
+  overflow: auto;
+}
+
+.productName::-webkit-scrollbar {
+  display: none;
 }
 
 .deleteButton {

@@ -38,7 +38,6 @@ class ReturnProductService {
       'days',
     );
     const overdueDay = diffDate >= 0 ? 0 : -diffDate;
-    console.log(diffDate, overdueDay);
 
     const returnedProductData = {
       studentId,

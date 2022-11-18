@@ -1,8 +1,10 @@
 const StudentRepository = require('../repositories/student.repository');
 
 class StudentService {
-  static async findById(id) {
-    const student = await StudentRepository.findById(id);
+  static async findByGradeAndClassNMAndName(studentData) {
+    const student = await StudentRepository.findByGradeAndClassNMAndName(
+      studentData,
+    );
 
     if (!student) {
       return null;

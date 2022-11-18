@@ -63,7 +63,6 @@ function InputStudentInfoModal({ studentCardId }) {
             fontSize="28px"
             onClickEvent={async () => {
               const createdStudentData = { id: studentCardId, ...studentData };
-              console.log(createdStudentData);
               await StudentAPI.createStudent(createdStudentData);
               const { id, grade, classNM, name } = createdStudentData;
               setCurrentModal(KIND_OF_MODAL.NONE);

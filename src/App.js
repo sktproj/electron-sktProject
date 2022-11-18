@@ -11,6 +11,7 @@ import styles from './App.module.css';
 import HomePage from 'pages/homePage/HomePage';
 import StudentPage from 'pages/studentPage/StudentPage';
 import AdminPage from 'pages/adminPage/AdminPage';
+import AccessStudentPageModal from 'modal/accessStudentPageModal/AccessStudentPageModal';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -20,7 +21,6 @@ function App() {
 
   ipcRenderer.on('ScanningCard', (event, payload) => {
     const { cardId, studentData } = JSON.parse(payload);
-    console.log(studentData);
     if (studentData) {
       const { id, grade, classNM, name } = studentData;
       window.location.hash = `/student?id=${id}&grade=${grade}&classNM=${classNM}&name=${name}`;
@@ -67,6 +67,9 @@ function renderModal(currentModal, studentCardId) {
 
     case KIND_OF_MODAL.INPUT_STUDENT_INFO_MODAL:
       return <InputStudentInfoModal studentCardId={studentCardId} />;
+
+    case KIND_OF_MODAL.ACCESS_STUDENT_PAGE_MODAL:
+      return <AccessStudentPageModal />;
 
     default:
       return null;

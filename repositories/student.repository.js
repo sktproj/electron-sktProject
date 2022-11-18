@@ -1,8 +1,8 @@
 const { Student } = require('../models');
 
 class StudentRepository {
-  static async findById(id) {
-    const student = await Student.findOne({ where: { id } });
+  static async findByGradeAndClassNMAndName(studentData) {
+    const student = await Student.findOne({ where: { ...studentData } });
     return student;
   }
 

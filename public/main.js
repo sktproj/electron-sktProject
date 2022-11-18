@@ -55,6 +55,19 @@ app.on('window-all-closed', function () {
   }
 });
 
+// find student by id
+ipcMain.on('GetStudentByGradeAndClassNMAndName', async (event, payload) => {
+  const StudentService = require('../services/student.service');
+  const studentData = JSON.parse(payload);
+  const student = await StudentService.findByGradeAndClassNMAndName(
+    studentData,
+  );
+  event.reply(
+    'Reply_GetStudentByGradeAndClassNMAndName',
+    JSON.stringify(student),
+  );
+});
+
 // create student
 ipcMain.on('CreateStudent', async (event, payload) => {
   const StudentService = require('../services/student.service');

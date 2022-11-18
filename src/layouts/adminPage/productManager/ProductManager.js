@@ -18,19 +18,17 @@ function ProductManager() {
     <div className={styles.productManager}>
       <div className={styles.title}>물품 관리 창</div>
       <div className={styles.widgetList}>
-        <div className={styles.widgetGrid}>
-          {productList.map((product, index) => {
-            return (
-              <ProductWidget
-                key={index}
-                id={product.id}
-                name={product.name}
-                reload={reload}
-              />
-            );
-          })}
-          <AddProductButton />
-        </div>
+        {productList.map((product, index) => {
+          return (
+            <ProductWidget
+              key={index}
+              id={product.id}
+              name={product.name}
+              reload={reload}
+            />
+          );
+        })}
+        <AddProductButton />
       </div>
     </div>
   );

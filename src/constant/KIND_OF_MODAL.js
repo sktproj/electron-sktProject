@@ -5,6 +5,7 @@ const KIND_OF_MODAL = {
   ADD_PRODUCT_MODAL: 'addProductModal',
   ADMIN_AUTH: 'adminAuth',
   INPUT_STUDENT_INFO_MODAL: 'inputStudentInfoModal',
+  ACCESS_STUDENT_PAGE_MODAL: 'accessStudentPageModal',
 };
 
 export default KIND_OF_MODAL;

@@ -15,9 +15,7 @@ const customStyles = {
 function AddProductModal() {
   const [productName, setProductName] = useState('');
 
-  useEffect(() => {
-    console.log(productName);
-  }, [productName]);
+  useEffect(() => {}, [productName]);
 
   return (
     <CustomModal style={customStyles}>
