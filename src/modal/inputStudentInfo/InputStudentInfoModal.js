@@ -17,6 +17,7 @@ const customStyles = {
 const inputData = [
   { key: 'grade', placeholder: '학년' },
   { key: 'classNM', placeholder: '반' },
+  { key: 'studentNB', placeholder: '번호' },
   { key: 'name', placeholder: '이름' },
 ];
 
@@ -25,6 +26,7 @@ function InputStudentInfoModal({ studentCardId }) {
   const [studentData, setStudentData] = useState({
     grade: null,
     classNM: null,
+    studentNB: null,
     name: null,
   });
 
@@ -36,7 +38,7 @@ function InputStudentInfoModal({ studentCardId }) {
             return (
               <CustomInput
                 key={index}
-                width="130px"
+                width="100px"
                 height="45px"
                 color="#4e73df"
                 fontSize="22px"

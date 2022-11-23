@@ -1,14 +1,14 @@
 const { ipcRenderer } = window.require('electron');
 
 class StudentAPI {
-  static findByGradeAndClassNMAndName(studentData) {
+  static findByGradeAndClassNMAndStudentNBAndName(studentData) {
     return new Promise(resolve => {
       ipcRenderer.send(
-        'GetStudentByGradeAndClassNMAndName',
+        'GetStudentByGradeAndClassNMAndStudentNBAndName',
         JSON.stringify(studentData),
       );
       ipcRenderer.on(
-        'Reply_GetStudentByGradeAndClassNMAndName',
+        'Reply_GetStudentByGradeAndClassNMAndStudentNBAndName',
         (event, payload) => {
           resolve(JSON.parse(payload));
         },

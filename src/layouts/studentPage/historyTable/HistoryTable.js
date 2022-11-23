@@ -55,7 +55,7 @@ function HistoryTable() {
 async function getHistory(currentFilter, studentId) {
   switch (currentFilter) {
     case KIND_OF_TABLE_FILTER.BORROW:
-      const borrowList = await BorrowAPI.getBorrowListAll(studentId);
+      const borrowList = await BorrowAPI.getBorrowListAllByStudentId(studentId);
       return processBorrowList(borrowList, currentFilter);
 
     case KIND_OF_TABLE_FILTER.OVERDUE:

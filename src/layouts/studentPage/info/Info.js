@@ -16,7 +16,7 @@ function Info() {
     (async () => {
       const studentId = URLUtil.getQueryParam('id');
 
-      const borrowList = await BorrowAPI.getBorrowListAll(studentId);
+      const borrowList = await BorrowAPI.getBorrowListAllByStudentId(studentId);
       setReturnDueProductAmount(borrowList.length);
 
       const overdueProductList = await BorrowAPI.getBorrowListFilterOverdue(

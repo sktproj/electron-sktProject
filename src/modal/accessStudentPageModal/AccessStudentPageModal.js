@@ -17,6 +17,7 @@ const customStyles = {
 const inputData = [
   { key: 'grade', placeholder: '학년' },
   { key: 'classNM', placeholder: '반' },
+  { key: 'studentNB', placeholder: '번호' },
   { key: 'name', placeholder: '이름' },
 ];
 
@@ -25,12 +26,15 @@ function AccessStudentPageModal() {
   const [studentData, setStudentData] = useState({
     grade: null,
     classNM: null,
+    studentNB: null,
     name: null,
   });
-  const [notExistStudent, setNotExistStudent] = useState(false);
+  const [warning, setWarning] = useState({ state: false, msg: '' });
 
   useEffect(() => {
-    setNotExistStudent(false);
+    setWarning(prev => {
+      return { state: false, msg: '' };
+    });
   }, [studentData]);
 
   return (
@@ -42,9 +46,9 @@ function AccessStudentPageModal() {
               return (
                 <CustomInput
                   key={index}
-                  width="130px"
+                  width="100px"
                   height="45px"
-                  color={notExistStudent ? '#e74a3b' : '#4e73df'}
+                  color={warning.state ? '#e74a3b' : '#4e73df'}
                   fontSize="22px"
                   placeholder={data.placeholder}
                   onChangeEvent={e => {
@@ -60,9 +64,9 @@ function AccessStudentPageModal() {
           </div>
           <span
             className={styles.notExistStudentMSG}
-            style={{ display: notExistStudent ? 'inline' : 'none' }}
+            style={{ display: warning.state ? 'inline' : 'none' }}
           >
-            해당하는 정보의 학생이 존재하지 않습니다.
+            {warning.msg}
           </span>
         </div>
         <div className={styles.buttonContainer}>
@@ -72,12 +76,35 @@ function AccessStudentPageModal() {
             color="#4e73df"
             fontSize="26px"
             onClickEvent={async () => {
-              const student = await StudentAPI.findByGradeAndClassNMAndName(
-                studentData,
-              );
+              if (
+                !studentData.grade ||
+                !studentData.classNM ||
+                !studentData.studentNB ||
+                !studentData.name
+              ) {
+                setWarning(prev => {
+                  return {
+                    ...prev,
+                    state: true,
+                    msg: '빈칸을 모두 채워 주십시오.',
+                  };
+                });
+                return;
+              }
+
+              const student =
+                await StudentAPI.findByGradeAndClassNMAndStudentNBAndName(
+                  studentData,
+                );
 
               if (!student) {
-                setNotExistStudent(true);
+                setWarning(prev => {
+                  return {
+                    ...prev,
+                    state: true,
+                    msg: '해당하는 정보의 학생이 존재하지 않습니다.',
+                  };
+                });
                 return;
               }
 

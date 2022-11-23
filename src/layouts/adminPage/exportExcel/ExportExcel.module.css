@@ -1,8 +1,7 @@
-.accessStudentPage {
-  grid-area: accessStudentPage;
+.exportExcel {
+  grid-area: exportExcel;
   width: 400px;
   height: 70px;
-  margin-bottom: 50px;
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: rgba(149, 157, 165, 0.4) 0px 0px 18px;

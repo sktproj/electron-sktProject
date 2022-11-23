@@ -1,7 +1,11 @@
 const { Student } = require('../models');
 
 class StudentRepository {
-  static async findByGradeAndClassNMAndName(studentData) {
+  static async findById(id) {
+    return await Student.findOne({ where: { id } });
+  }
+
+  static async findByGradeAndClassNMAndStudentNBAndName(studentData) {
     const student = await Student.findOne({ where: { ...studentData } });
     return student;
   }
