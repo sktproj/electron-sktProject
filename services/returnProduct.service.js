@@ -2,6 +2,10 @@ const ReturnProductRepository = require('../repositories/returnProduct.repositor
 const moment = require('moment');
 
 class ReturnProductService {
+  static async findAllJoinStudent() {
+    return await ReturnProductRepository.findAllJoinStudent();
+  }
+
   static async findAllByStudentId(studentId) {
     const returnProductList = await ReturnProductRepository.findAllByStudentId(
       studentId,

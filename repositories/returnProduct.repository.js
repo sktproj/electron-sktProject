@@ -2,6 +2,12 @@ const { ReturnProduct, Product } = require('../models');
 const { Op } = require('sequelize');
 
 class ReturnProductRepository {
+  static async findAllJoinStudent() {
+    return await ReturnProduct.findAll({
+      include: [{ model: Student }],
+    });
+  }
+
   static async findAllByStudentId(studentId) {
     return await ReturnProduct.findAll({
       include: [{ model: Product }],

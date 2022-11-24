@@ -104,10 +104,10 @@ ipcMain.on('UpdateProduct', async (event, payload) => {
 });
 
 // get borrow list
-ipcMain.on('GetBorrowListAll', async (event, payload) => {
+ipcMain.on('GetBorrowListAllByStudentId', async (event, payload) => {
   const BorrowService = require('../services/borrow.service');
   const borrowList = await BorrowService.findByStudentId(JSON.parse(payload));
-  event.reply('Reply_GetBorrowListAll', JSON.stringify(borrowList));
+  event.reply('Reply_GetBorrowListAllByStudentId', JSON.stringify(borrowList));
 });
 
 ipcMain.on('GetBorrowListFilterBorrow', async (event, payload) => {
@@ -145,6 +145,15 @@ ipcMain.on('ReturnProduct', async (event, payload) => {
 });
 
 // get return product list
+ipcMain.on('GetReturnProductListJoinStudent', async (event, payload) => {
+  const ReturnProductService = require('../services/returnProduct.service');
+  const returnProductList = await ReturnProductService.findAllJoinStudent();
+  event.reply(
+    'Reply_GetReturnProductListJoinStudent',
+    JSON.stringify(borrowList),
+  );
+});
+
 ipcMain.on('GetReturnProductList', async (event, payload) => {
   const ReturnProductService = require('../services/returnProduct.service');
   const studentId = JSON.parse(payload);
