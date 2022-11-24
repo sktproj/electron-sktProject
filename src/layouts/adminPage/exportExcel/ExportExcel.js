@@ -14,7 +14,20 @@ function ExportExcel() {
         color="#33C481"
         fontSize="32px"
         onClickEvent={async () => {
-          await BorrowAPI.getBorrowListAll(); // 내부 로직 작성 필요 2022-11-24 : 0835
+          const workbook = await createWorkbook();
+
+          workbook.xlsx.writeBuffer().then(data => {
+            const blob = new Blob([data], {
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+            const url = window.URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+            anchor.href = url;
+            const currentDate = moment().format('YYMMDD');
+            anchor.download = `${currentDate}_양심물품실_반납기록.xlsx`;
+            anchor.click();
+            window.URL.revokeObjectURL(url);
+          });
         }}
       >
         대출 목록 출력
@@ -23,7 +36,7 @@ function ExportExcel() {
   );
 }
 
-function createExcelFile() {
+async function createWorkbook() {
   const workbook = new Excel.Workbook();
 
   workbook.creator = '양심물품실';
@@ -33,62 +46,48 @@ function createExcelFile() {
 
   const sheet1 = workbook.addWorksheet('Sheet1');
 
-  sheet1.columns = [
-    {
-      header: '학년',
-      name: 'grade',
-      width: '20',
-      style: {
-        font: { size: 16 },
-      },
-    },
-    {
-      header: '반',
-      name: 'classNM',
-      width: '20',
-      style: {
-        font: { size: 16 },
-      },
-    },
-    {
-      header: '번호',
-      name: 'studentNB',
-      width: '20',
-      style: {
-        font: { size: 16 },
-      },
-    },
-    {
-      header: '이름',
-      name: 'name',
-      width: '20',
-      style: {
-        font: { size: 16 },
-      },
-    },
-    {
-      header: '대여일',
-      name: 'borrowDate',
-      width: '20',
-      style: {
-        font: { size: 16 },
-      },
-    },
-    {
-      header: '반납일',
-      name: 'returnDate',
-      width: '20',
-      style: {
-        font: { size: 16 },
-      },
-    },
+  const kindOfColumns = [
+    { header: '학년', key: 'grade' },
+    { header: '반', key: 'classNM' },
+    { header: '번호', key: 'studentNB' },
+    { header: '이름', key: 'name' },
+    { header: '빌린 물품', key: 'product' },
+    { header: '대여일', key: 'borrowDate' },
+    { header: '반납일', key: 'returnDate' },
   ];
 
-  const borrowList = ReturnProductAPI.getReturnProductListJoinStudent();
-
-  borrowList.forEach(borrow => {
-    const rowArr = [];
+  sheet1.columns = kindOfColumns.map(column => {
+    return {
+      header: column.header,
+      key: column.key,
+      width: '20',
+      style: {
+        font: { size: 16 },
+      },
+    };
   });
+
+  const returnProductList =
+    await ReturnProductAPI.getReturnProductListJoinStudentAndProduct();
+
+  returnProductList.forEach(returnProduct => {
+    const { grade, classNM, studentNB, name } = returnProduct.Student;
+    const product = returnProduct.Product.name;
+    const { borrowDate, returnDate } = returnProduct;
+
+    const sheetRow = {
+      grade,
+      classNM,
+      studentNB: '777',
+      name,
+      product,
+      borrowDate,
+      returnDate,
+    };
+    sheet1.addRow(sheetRow);
+  });
+
+  return workbook;
 }
 
 export default ExportExcel;

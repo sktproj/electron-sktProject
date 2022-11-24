@@ -1,11 +1,11 @@
 const { ipcRenderer } = window.require('electron');
 
 class ReturnProductAPI {
-  static async getReturnProductListJoinStudent() {
+  static async getReturnProductListJoinStudentAndProduct() {
     return new Promise(resolve => {
-      ipcRenderer.send('GetReturnProductListJoinStudent');
+      ipcRenderer.send('GetReturnProductListJoinStudentAndProduct');
       ipcRenderer.on(
-        'Reply_GetReturnProductListJoinStudent',
+        'Reply_GetReturnProductListJoinStudentAndProduct',
         (event, payload) => {
           resolve(JSON.parse(payload));
         },

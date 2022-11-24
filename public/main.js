@@ -145,14 +145,18 @@ ipcMain.on('ReturnProduct', async (event, payload) => {
 });
 
 // get return product list
-ipcMain.on('GetReturnProductListJoinStudent', async (event, payload) => {
-  const ReturnProductService = require('../services/returnProduct.service');
-  const returnProductList = await ReturnProductService.findAllJoinStudent();
-  event.reply(
-    'Reply_GetReturnProductListJoinStudent',
-    JSON.stringify(borrowList),
-  );
-});
+ipcMain.on(
+  'GetReturnProductListJoinStudentAndProduct',
+  async (event, payload) => {
+    const ReturnProductService = require('../services/returnProduct.service');
+    const returnProductList =
+      await ReturnProductService.findAllJoinStudentAndProduct();
+    event.reply(
+      'Reply_GetReturnProductListJoinStudentAndProduct',
+      JSON.stringify(returnProductList),
+    );
+  },
+);
 
 ipcMain.on('GetReturnProductList', async (event, payload) => {
   const ReturnProductService = require('../services/returnProduct.service');

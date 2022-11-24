@@ -1,10 +1,10 @@
-const { ReturnProduct, Product } = require('../models');
+const { ReturnProduct, Product, Student } = require('../models');
 const { Op } = require('sequelize');
 
 class ReturnProductRepository {
-  static async findAllJoinStudent() {
+  static async findAllJoinStudentAndProduct() {
     return await ReturnProduct.findAll({
-      include: [{ model: Student }],
+      include: [{ model: Student }, { model: Product }],
     });
   }
 
