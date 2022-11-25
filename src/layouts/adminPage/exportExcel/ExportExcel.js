@@ -23,8 +23,7 @@ function ExportExcel() {
             const url = window.URL.createObjectURL(blob);
             const anchor = document.createElement('a');
             anchor.href = url;
-            const currentDate = moment().format('YYMMDD');
-            anchor.download = `${currentDate}_양심물품실_반납기록.xlsx`;
+            anchor.download = `테스트.xlsx`;
             anchor.click();
             window.URL.revokeObjectURL(url);
           });
@@ -78,7 +77,7 @@ async function createWorkbook() {
     const sheetRow = {
       grade,
       classNM,
-      studentNB: '777',
+      studentNB,
       name,
       product,
       borrowDate,
