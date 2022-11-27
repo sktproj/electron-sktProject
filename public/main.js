@@ -34,7 +34,7 @@ function createWindow() {
 
   serialport.on('open', () => {
     serialport.on('data', async data => {
-      const cardId = data.toString('utf8');
+      const cardId = data.toString('utf8').replace('\r', '');
       const StudentService = require('../services/student.service');
       const studentData = await StudentService.findById(cardId);
 

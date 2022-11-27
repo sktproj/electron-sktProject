@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import URLUtil from 'utils/URL';
 import ProductAPI from 'api/ProductAPI';
 import BorrowAPI from 'api/BorrowAPI';
+import ReturnProductAPI from 'api/ReturnProductAPI';
 
 function Info() {
   const [returnDueProductAmount, setReturnDueProductAmount] = useState(-1);
   const [overdueProductAmount, setOverdueProductAmount] = useState(-1);
+  const [overdueCount, setOverdueCount] = useState(-1);
 
   useEffect(() => {
     (async () => {
@@ -21,6 +23,11 @@ function Info() {
         studentId,
       );
       setOverdueProductAmount(overdueProductList.length);
+
+      const returnProductList = await ReturnProductAPI.getReturnProductList(
+        studentId,
+      );
+      setOverdueCount(overdueProductList.length + returnProductList.length);
     })();
   }, []);
 
@@ -37,7 +44,7 @@ function Info() {
         value={`${overdueProductAmount}개`}
         color="#f6c23e"
       />
-      <Tag name={'연체 횟수'} value={`${999}번`} color="#e74a3b" />
+      <Tag name={'연체 횟수'} value={`${overdueCount}번`} color="#e74a3b" />
     </div>
   );
 }
