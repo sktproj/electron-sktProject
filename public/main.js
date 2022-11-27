@@ -97,6 +97,7 @@ ipcMain.on('CreateStudent', async (event, payload) => {
 ipcMain.on('UpdateStudent', async (event, payload) => {
   const StudentService = require('../services/student.service');
   const { studentId, studentData } = JSON.parse(payload);
+  console.log('main.js student id : ', studentId);
   await StudentService.update(studentId, studentData);
   event.reply('Reply_UpdateStudent');
 });

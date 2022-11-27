@@ -6,6 +6,7 @@ import StudentAPI from 'api/StudentAPI';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 import AppContext from 'context/AppContext';
 import styles from './ModifyStudentInfoModal.module.css';
+import URLUtil from 'utils/URL';
 
 const customStyles = {
   content: {
@@ -20,7 +21,7 @@ const inputData = [
   { key: 'studentNB', placeholder: '번호' },
 ];
 
-function ModifyStudentInfoModal({ studentCardId }) {
+function ModifyStudentInfoModal() {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
     grade: null,
@@ -64,6 +65,7 @@ function ModifyStudentInfoModal({ studentCardId }) {
             color="#4e73df"
             fontSize="28px"
             onClickEvent={async () => {
+              const studentCardId = URLUtil.getQueryParam('id');
               await StudentAPI.updateStudent(studentCardId, studentData);
               window.location.reload();
             }}

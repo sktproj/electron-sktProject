@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import CustomModal from 'components/customModal/CustomModal';
-import CloseButton from './modalHeader/ModalHeader';
+import CancelButton from './cancelButton/CancelButton';
 import ProductSelecter from './productSelecter/ProductSelecter';
 import ConfirmButton from './confirmButton/ConfirmButton';
 import styles from './BorrowModal.module.css';
+import AppContext from 'context/AppContext';
 
 const customStyles = {
   content: {
@@ -18,12 +19,15 @@ function BorrowModal() {
   return (
     <CustomModal style={customStyles}>
       <div className={styles.borrowModal}>
-        <CloseButton />
+        <div className={styles.title}>대출 물품 선택</div>
         <ProductSelecter
           selectedList={selectedList}
           setSelectedList={setSelectedList}
         />
-        <ConfirmButton selectedList={selectedList} />
+        <div className={styles.buttonContainer}>
+          <ConfirmButton selectedList={selectedList} />
+          <CancelButton />
+        </div>
       </div>
     </CustomModal>
   );

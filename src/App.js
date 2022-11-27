@@ -77,7 +77,7 @@ function renderModal(currentModal, studentCardId) {
       return <ChangeAdminPassword />;
 
     case KIND_OF_MODAL.MODIFY_STUDENT_INFO:
-      return <ModifyStudentInfoModal studentCardId={studentCardId} />;
+      return <ModifyStudentInfoModal />;
 
     default:
       return null;
