@@ -1,16 +1,20 @@
 import Identifier from './identifier/Identifier';
 import Tag from './tag/Tag';
 import styles from './Info.module.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import URLUtil from 'utils/URL';
 import ProductAPI from 'api/ProductAPI';
 import BorrowAPI from 'api/BorrowAPI';
 import ReturnProductAPI from 'api/ReturnProductAPI';
+import infoModifyButtonImg from 'image/student_page_info_modify_button_img.png';
+import AppContext from 'context/AppContext';
+import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 function Info() {
   const [returnDueProductAmount, setReturnDueProductAmount] = useState(-1);
   const [overdueProductAmount, setOverdueProductAmount] = useState(-1);
   const [overdueCount, setOverdueCount] = useState(-1);
+  const { setCurrentModal } = useContext(AppContext);
 
   useEffect(() => {
     (async () => {
@@ -34,6 +38,16 @@ function Info() {
 
   return (
     <div className={styles.info}>
+      <div className={styles.infoModify}>
+        <img
+          width="25px"
+          src={infoModifyButtonImg}
+          alt=""
+          onClick={() => {
+            setCurrentModal(KIND_OF_MODAL.MODIFY_STUDENT_INFO);
+          }}
+        />
+      </div>
       <Identifier />
       <Tag
         name={'빌린 물품'}

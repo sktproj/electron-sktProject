@@ -8,3 +8,15 @@
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.4) 0px 0px 18px;
 }
+
+.infoModify {
+  width: 100%;
+}
+
+.infoModify img {
+  cursor: pointer;
+}
+
+.infoModify img:hover {
+  filter: invert(35%);
+}

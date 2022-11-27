@@ -9,4 +9,5 @@
 
 .buttonContainer {
   grid-area: buttonContainer;
+  padding-top: 10px;
 }

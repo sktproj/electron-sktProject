@@ -13,6 +13,10 @@ class StudentRepository {
   static async create(createdStudentData) {
     await Student.create({ ...createdStudentData });
   }
+
+  static async update(id, updatedStudentData) {
+    await Student.update({ ...updatedStudentData }, { where: { id } });
+  }
 }
 
 module.exports = StudentRepository;

@@ -6,6 +6,8 @@ const KIND_OF_MODAL = {
   ADMIN_AUTH: 'adminAuth',
   INPUT_STUDENT_INFO_MODAL: 'inputStudentInfoModal',
   ACCESS_STUDENT_PAGE_MODAL: 'accessStudentPageModal',
+  CHANGE_ADMIN_PASSWORD: 'changeAdminPassword',
+  MODIFY_STUDENT_INFO: 'modifyStudentInfo',
 };
 
 export default KIND_OF_MODAL;

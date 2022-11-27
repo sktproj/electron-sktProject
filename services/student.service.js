@@ -21,6 +21,10 @@ class StudentService {
   static async create(createdStudentData) {
     return await StudentRepository.create(createdStudentData);
   }
+
+  static async update(id, updatedStudentData) {
+    return await StudentRepository.update(id, updatedStudentData);
+  }
 }
 
 module.exports = StudentService;

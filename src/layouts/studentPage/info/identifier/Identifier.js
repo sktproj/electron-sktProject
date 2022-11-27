@@ -1,26 +1,29 @@
 import { useEffect, useState } from 'react';
 import styles from './Identifier.module.css';
 import URLUtil from 'utils/URL';
+import StudentAPI from 'api/StudentAPI';
 
 function Identifier() {
-  const [grade, setGrade] = useState('');
-  const [classNM, setClassNM] = useState('');
-  const [name, setName] = useState('');
+  const [studentInfo, setStudentInfo] = useState({
+    grade: null,
+    classNM: null,
+    name: null,
+  });
 
   useEffect(() => {
-    const { grade, classNM, name } = URLUtil.getQueryParams([
-      'grade',
-      'classNM',
-      'name',
-    ]);
-    setGrade(grade);
-    setClassNM(classNM);
-    setName(name);
+    (async () => {
+      const studentId = URLUtil.getQueryParam('id');
+      const student = await StudentAPI.findById(studentId);
+      const { grade, classNM, name } = student;
+      setStudentInfo(prev => {
+        return { ...prev, grade, classNM, name };
+      });
+    })();
   }, []);
 
   return (
     <div className={styles.id}>
-      {grade}학년 {classNM}반 {name}
+      {studentInfo.grade}학년 {studentInfo.classNM}반 {studentInfo.name}
     </div>
   );
 }
