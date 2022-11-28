@@ -9,7 +9,7 @@ import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 const customStyles = {
   content: {
-    width: '500px',
+    width: '400px',
     height: '190px',
   },
 };
@@ -18,7 +18,6 @@ const inputData = [
   { key: 'grade', placeholder: '학년' },
   { key: 'classNM', placeholder: '반' },
   { key: 'studentNB', placeholder: '번호' },
-  { key: 'name', placeholder: '이름' },
 ];
 
 function AccessStudentPageModal() {
@@ -27,7 +26,6 @@ function AccessStudentPageModal() {
     grade: null,
     classNM: null,
     studentNB: null,
-    name: null,
   });
   const [warning, setWarning] = useState({ state: false, msg: '' });
 
@@ -79,8 +77,7 @@ function AccessStudentPageModal() {
               if (
                 !studentData.grade ||
                 !studentData.classNM ||
-                !studentData.studentNB ||
-                !studentData.name
+                !studentData.studentNB
               ) {
                 setWarning(prev => {
                   return {
@@ -93,16 +90,14 @@ function AccessStudentPageModal() {
               }
 
               const student =
-                await StudentAPI.findByGradeAndClassNMAndStudentNBAndName(
-                  studentData,
-                );
+                await StudentAPI.findByGradeAndClassNMAndStudentNB(studentData);
 
               if (!student) {
                 setWarning(prev => {
                   return {
                     ...prev,
                     state: true,
-                    msg: '해당하는 정보의 학생이 존재하지 않습니다.',
+                    msg: '해당하는 학번의 학생이 존재하지 않습니다.',
                   };
                 });
                 return;
@@ -114,6 +109,17 @@ function AccessStudentPageModal() {
             }}
           >
             확인
+          </CustomButton>
+          <CustomButton
+            width="100px"
+            height="45px"
+            color="#e74a3b"
+            fontSize="26px"
+            onClickEvent={() => {
+              setCurrentModal(KIND_OF_MODAL.NONE);
+            }}
+          >
+            취소
           </CustomButton>
         </div>
       </div>

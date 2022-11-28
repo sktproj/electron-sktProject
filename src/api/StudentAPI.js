@@ -10,14 +10,14 @@ class StudentAPI {
     });
   }
 
-  static findByGradeAndClassNMAndStudentNBAndName(studentData) {
+  static findByGradeAndClassNMAndStudentNB(studentData) {
     return new Promise(resolve => {
       ipcRenderer.send(
-        'GetStudentByGradeAndClassNMAndStudentNBAndName',
+        'GetStudentByGradeAndClassNMAndStudentNB',
         JSON.stringify(studentData),
       );
       ipcRenderer.on(
-        'Reply_GetStudentByGradeAndClassNMAndStudentNBAndName',
+        'Reply_GetStudentByGradeAndClassNMAndStudentNB',
         (event, payload) => {
           resolve(JSON.parse(payload));
         },

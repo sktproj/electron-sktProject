@@ -9,7 +9,7 @@ remote.initialize();
 const { ipcMain } = require('electron');
 
 require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
-require('../models').sequelize.sync();
+require('../models').sequelize.sync({ force: true });
 
 const Excel = require('exceljs');
 const moment = require('moment');
@@ -65,21 +65,21 @@ ipcMain.on('GetStudentById', async (event, payload) => {
   const StudentService = require('../services/student.service');
   const studentId = JSON.parse(payload);
   const student = await StudentService.findById(studentId);
+  console.log(student.updatedAt);
   event.reply('Reply_GetStudentById', JSON.stringify(student));
 });
 
 // find student by grade and classNM and studentNB and name
 ipcMain.on(
-  'GetStudentByGradeAndClassNMAndStudentNBAndName',
+  'GetStudentByGradeAndClassNMAndStudentNB',
   async (event, payload) => {
     const StudentService = require('../services/student.service');
     const studentData = JSON.parse(payload);
-    const student =
-      await StudentService.findByGradeAndClassNMAndStudentNBAndName(
-        studentData,
-      );
+    const student = await StudentService.findByGradeAndClassNMAndStudentNB(
+      studentData,
+    );
     event.reply(
-      'Reply_GetStudentByGradeAndClassNMAndStudentNBAndName',
+      'Reply_GetStudentByGradeAndClassNMAndStudentNB',
       JSON.stringify(student),
     );
   },

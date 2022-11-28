@@ -5,11 +5,10 @@ class StudentService {
     return await StudentRepository.findById(id);
   }
 
-  static async findByGradeAndClassNMAndStudentNBAndName(studentData) {
-    const student =
-      await StudentRepository.findByGradeAndClassNMAndStudentNBAndName(
-        studentData,
-      );
+  static async findByGradeAndClassNMAndStudentNB(studentData) {
+    const student = await StudentRepository.findByGradeAndClassNMAndStudentNB(
+      studentData,
+    );
 
     if (!student) {
       return null;

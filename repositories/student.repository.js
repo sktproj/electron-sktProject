@@ -5,7 +5,7 @@ class StudentRepository {
     return await Student.findOne({ where: { id } });
   }
 
-  static async findByGradeAndClassNMAndStudentNBAndName(studentData) {
+  static async findByGradeAndClassNMAndStudentNB(studentData) {
     const student = await Student.findOne({ where: { ...studentData } });
     return student;
   }

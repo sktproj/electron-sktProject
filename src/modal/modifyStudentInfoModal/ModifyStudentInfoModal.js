@@ -11,7 +11,7 @@ import URLUtil from 'utils/URL';
 const customStyles = {
   content: {
     width: '400px',
-    height: '170px',
+    height: '230px',
   },
 };
 
@@ -32,6 +32,7 @@ function ModifyStudentInfoModal() {
   return (
     <CustomModal style={customStyles}>
       <div className={styles.modifyStudentInfoModal}>
+        <div className={styles.title}>학번 수정</div>
         <div className={styles.inputContainer}>
           {inputData.map((data, index) => {
             return (
@@ -60,10 +61,10 @@ function ModifyStudentInfoModal() {
               !studentData.classNM ||
               !studentData.studentNB
             }
-            width="100px"
-            height="45px"
+            width="80px"
+            height="40px"
             color="#4e73df"
-            fontSize="28px"
+            fontSize="25px"
             onClickEvent={async () => {
               const studentCardId = URLUtil.getQueryParam('id');
               await StudentAPI.updateStudent(studentCardId, studentData);
@@ -73,10 +74,10 @@ function ModifyStudentInfoModal() {
             완료
           </CustomButton>
           <CustomButton
-            width="100px"
-            height="45px"
+            width="80px"
+            height="40px"
             color="#e74a3b"
-            fontSize="28px"
+            fontSize="25px"
             onClickEvent={() => {
               setCurrentModal(KIND_OF_MODAL.NONE);
             }}

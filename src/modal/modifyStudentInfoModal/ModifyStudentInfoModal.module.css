@@ -6,6 +6,14 @@
   height: 100%;
 }
 
+.title {
+  width: 100%;
+  margin-bottom: 6px;
+  color: #494949;
+  font-family: 'maplestoryBold';
+  font-size: 26px;
+}
+
 .inputContainer {
   width: 100%;
   display: flex;
@@ -14,8 +22,8 @@
 }
 
 .buttonContainer {
-  width: 100%;
+  width: 55%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
