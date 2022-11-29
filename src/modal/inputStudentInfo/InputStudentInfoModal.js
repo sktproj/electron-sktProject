@@ -14,45 +14,63 @@ const customStyles = {
   },
 };
 
-const inputData = [
-  { key: 'grade', placeholder: '학년' },
-  { key: 'classNM', placeholder: '반' },
-  { key: 'studentNB', placeholder: '번호' },
-  { key: 'name', placeholder: '이름' },
-];
-
 function InputStudentInfoModal({ studentCardId }) {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
-    grade: null,
-    classNM: null,
-    studentNB: null,
-    name: null,
+    grade: 0,
+    classNM: 0,
+    studentNB: 0,
+    name: '',
   });
 
   return (
     <CustomModal style={customStyles}>
       <div className={styles.inputStudentInfoModal}>
         <div className={styles.inputContainer}>
-          {inputData.map((data, index) => {
+          {[
+            { key: 'grade', placeholder: '학년' },
+            { key: 'classNM', placeholder: '반' },
+            { key: 'studentNB', placeholder: '번호' },
+          ].map((data, index) => {
             return (
               <CustomInput
                 key={index}
+                value={studentData[data.key]}
                 width="100px"
                 height="45px"
                 color="#4e73df"
                 fontSize="22px"
                 placeholder={data.placeholder}
                 onChangeEvent={e => {
-                  setStudentData(prev => {
-                    let obj = { ...prev };
-                    obj[data.key] = e.target.value;
-                    return obj;
-                  });
+                  const text = e.target.value;
+                  if (/^[0-9]+$/.test(text) || !text) {
+                    setStudentData(prev => {
+                      let obj = { ...prev };
+                      obj[data.key] = text;
+                      return obj;
+                    });
+                  }
                 }}
               />
             );
           })}
+          <CustomInput
+            value={studentData.name}
+            width="100px"
+            height="45px"
+            color="#4e73df"
+            fontSize="22px"
+            placeholder={'이름'}
+            onChangeEvent={e => {
+              const text = e.target.value;
+              if (/^[가-힣]*$/.test(text) || !text) {
+                setStudentData(prev => {
+                  const text = e.target.value;
+                  return { ...prev, name: text };
+                });
+              }
+            }}
+          />
         </div>
         <div className={styles.buttonContainer}>
           <CustomButton

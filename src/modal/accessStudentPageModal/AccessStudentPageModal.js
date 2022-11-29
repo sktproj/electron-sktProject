@@ -14,18 +14,12 @@ const customStyles = {
   },
 };
 
-const inputData = [
-  { key: 'grade', placeholder: '학년' },
-  { key: 'classNM', placeholder: '반' },
-  { key: 'studentNB', placeholder: '번호' },
-];
-
 function AccessStudentPageModal() {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
-    grade: null,
-    classNM: null,
-    studentNB: null,
+    grade: '',
+    classNM: '',
+    studentNB: '',
   });
   const [warning, setWarning] = useState({ state: false, msg: '' });
 
@@ -40,21 +34,29 @@ function AccessStudentPageModal() {
       <div className={styles.accessStudentPageModal}>
         <div className={styles.inputContainer}>
           <div className={styles.input}>
-            {inputData.map((data, index) => {
+            {[
+              { key: 'grade', placeholder: '학년' },
+              { key: 'classNM', placeholder: '반' },
+              { key: 'studentNB', placeholder: '번호' },
+            ].map((data, index) => {
               return (
                 <CustomInput
                   key={index}
+                  value={studentData[data.key]}
                   width="100px"
                   height="45px"
                   color={warning.state ? '#e74a3b' : '#4e73df'}
                   fontSize="22px"
                   placeholder={data.placeholder}
                   onChangeEvent={e => {
-                    setStudentData(prev => {
-                      let obj = { ...prev };
-                      obj[data.key] = e.target.value;
-                      return obj;
-                    });
+                    const text = e.target.value;
+                    if (/^[0-9]+$/.test(text) || !text) {
+                      setStudentData(prev => {
+                        let obj = { ...prev };
+                        obj[data.key] = text;
+                        return obj;
+                      });
+                    }
                   }}
                 />
               );
@@ -88,6 +90,8 @@ function AccessStudentPageModal() {
                 });
                 return;
               }
+
+              console.log(studentData);
 
               const student =
                 await StudentAPI.findByGradeAndClassNMAndStudentNB(studentData);

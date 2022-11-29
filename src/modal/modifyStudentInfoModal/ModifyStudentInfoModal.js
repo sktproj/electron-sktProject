@@ -1,6 +1,6 @@
 import CustomModal from 'components/customModal/CustomModal';
 import CustomInput from 'components/customInput/CustomInput';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import CustomButton from 'components/customButton/CustomButton';
 import StudentAPI from 'api/StudentAPI';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
@@ -15,16 +15,11 @@ const customStyles = {
   },
 };
 
-const inputData = [
-  { key: 'classNM', placeholder: '반' },
-  { key: 'studentNB', placeholder: '번호' },
-];
-
 function ModifyStudentInfoModal() {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
-    classNM: null,
-    studentNB: null,
+    classNM: '',
+    studentNB: '',
   });
 
   return (
@@ -32,21 +27,28 @@ function ModifyStudentInfoModal() {
       <div className={styles.modifyStudentInfoModal}>
         <div className={styles.title}>학번 수정</div>
         <div className={styles.inputContainer}>
-          {inputData.map((data, index) => {
+          {[
+            { key: 'classNM', placeholder: '반' },
+            { key: 'studentNB', placeholder: '번호' },
+          ].map((data, index) => {
             return (
               <CustomInput
                 key={index}
+                value={studentData[data.key]}
                 width="100px"
                 height="45px"
                 color="#4e73df"
                 fontSize="22px"
                 placeholder={data.placeholder}
                 onChangeEvent={e => {
-                  setStudentData(prev => {
-                    let obj = { ...prev };
-                    obj[data.key] = e.target.value;
-                    return obj;
-                  });
+                  const text = e.target.value;
+                  if (/^[0-9]+$/.test(text) || !text) {
+                    setStudentData(prev => {
+                      let obj = { ...prev };
+                      obj[data.key] = e.target.value;
+                      return obj;
+                    });
+                  }
                 }}
               />
             );
@@ -54,17 +56,14 @@ function ModifyStudentInfoModal() {
         </div>
         <div className={styles.buttonContainer}>
           <CustomButton
-            disabled={
-              !studentData.grade ||
-              !studentData.classNM ||
-              !studentData.studentNB
-            }
+            disabled={!studentData.classNM || !studentData.studentNB}
             width="80px"
             height="40px"
             color="#4e73df"
             fontSize="25px"
             onClickEvent={async () => {
               const studentCardId = URLUtil.getQueryParam('id');
+              console.log(studentCardId);
               await StudentAPI.updateStudent(studentCardId, studentData);
               window.location.reload();
             }}

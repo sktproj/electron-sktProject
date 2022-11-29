@@ -22,4 +22,4 @@ class URLUtil {
   }
 }
 
-module.exports = URLUtil;
+export default URLUtil;

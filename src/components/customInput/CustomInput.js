@@ -11,6 +11,7 @@ const Input = styled.input`
 function CustomInput(props) {
   return (
     <Input
+      value={props.value}
       width={props.width}
       height={props.height}
       color={props.color}

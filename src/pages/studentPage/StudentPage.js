@@ -18,6 +18,7 @@ function StudentPage() {
 
   //timer
   useEffect(() => {
+    console.log(URLUtil.getQueryParam('id'));
     return () => clearInterval(timer);
   }, []);
 

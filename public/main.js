@@ -17,7 +17,7 @@ const ElectronStore = require('electron-store');
 const electronStore = new ElectronStore();
 
 const { SerialPort } = require('serialport');
-// const serialport = new SerialPort({ path: 'COM4', baudRate: 9600 });
+const serialport = new SerialPort({ path: 'COM4', baudRate: 9600 });
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -36,6 +36,19 @@ function createWindow() {
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`,
   );
+
+  serialport.on('open', () => {
+    serialport.on('data', async data => {
+      const cardId = data.toString('utf8').replace('\r', '');
+      const StudentService = require('../services/student.service');
+      const studentData = await StudentService.findById(cardId);
+
+      win.webContents.send(
+        'ScanningCard',
+        JSON.stringify({ cardId, studentData }),
+      );
+    });
+  });
 
   const currentYear = moment().year();
   const currentMonth = moment().month() + 1;
