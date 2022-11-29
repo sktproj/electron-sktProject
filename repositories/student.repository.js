@@ -5,6 +5,10 @@ class StudentRepository {
     return await Student.findOne({ where: { id } });
   }
 
+  static async findAllIdd() {
+    return await Student.findAll({ attributes: ['id'] });
+  }
+
   static async findByGradeAndClassNMAndStudentNB(studentData) {
     const student = await Student.findOne({ where: { ...studentData } });
     return student;

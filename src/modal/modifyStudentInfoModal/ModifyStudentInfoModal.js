@@ -10,13 +10,12 @@ import URLUtil from 'utils/URL';
 
 const customStyles = {
   content: {
-    width: '400px',
+    width: '300px',
     height: '230px',
   },
 };
 
 const inputData = [
-  { key: 'grade', placeholder: '학년' },
   { key: 'classNM', placeholder: '반' },
   { key: 'studentNB', placeholder: '번호' },
 ];
@@ -24,7 +23,6 @@ const inputData = [
 function ModifyStudentInfoModal() {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
-    grade: null,
     classNM: null,
     studentNB: null,
   });

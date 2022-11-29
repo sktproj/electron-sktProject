@@ -5,6 +5,10 @@ class StudentService {
     return await StudentRepository.findById(id);
   }
 
+  static async findAllIdd() {
+    return await StudentRepository.findAllIdd();
+  }
+
   static async findByGradeAndClassNMAndStudentNB(studentData) {
     const student = await StudentRepository.findByGradeAndClassNMAndStudentNB(
       studentData,

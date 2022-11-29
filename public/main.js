@@ -9,7 +9,7 @@ remote.initialize();
 const { ipcMain } = require('electron');
 
 require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
-require('../models').sequelize.sync({ force: true });
+require('../models').sequelize.sync();
 
 const Excel = require('exceljs');
 const moment = require('moment');
@@ -49,6 +49,21 @@ function createWindow() {
       );
     });
   });
+
+  // const isUpdatedGradeInCurrentYear = electronStore.get(
+  //   'isUpdatedGradeInCurrentYear',
+  // );
+  // if (!isUpdatedGradeInCurrentYear && moment().month + 1 >= 2) {
+  //   const studentService = require('../services/student.service');
+  //   const AllStudentId = studentService.findAllIdd();
+  //   console.log(AllStudentId);
+  // }
+
+  (async () => {
+    const studentService = require('../services/student.service');
+    const AllStudentId = await studentService.findAllIdd();
+    console.log(AllStudentId[0].Student.id);
+  })();
 
   remote.enable(win.webContents);
 }

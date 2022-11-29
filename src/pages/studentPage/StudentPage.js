@@ -7,6 +7,7 @@ import AppContext from 'context/AppContext';
 import URLUtil from 'utils/URL';
 import StudentAPI from 'api/StudentAPI';
 import moment from 'moment';
+import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 
 function StudentPage() {
   const { setCurrentModal } = useContext(AppContext);
@@ -17,7 +18,13 @@ function StudentPage() {
       const student = await StudentAPI.findById(studentCardId);
       const studentUpdatedAt = student.updatedAt;
 
-      console.log(studentUpdatedAt, typeof studentUpdatedAt);
+      const currentYear = moment().year();
+      const currentMonth = moment().month() + 1;
+      const studentUpdatedAtYear = moment(studentUpdatedAt).year();
+
+      if (studentUpdatedAtYear < currentYear && currentMonth >= 2) {
+        setCurrentModal(KIND_OF_MODAL.MODIFY_STUDENT_INFO);
+      }
     })();
   }, []);
 
