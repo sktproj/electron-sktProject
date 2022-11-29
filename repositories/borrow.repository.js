@@ -41,7 +41,7 @@ class BorrowRepository {
   }
 
   static async create(studentId, productId) {
-    await Borrow.create({
+    return await Borrow.create({
       studentId,
       productId,
     });
@@ -55,6 +55,10 @@ class BorrowRepository {
       },
     });
     return deletedBorrow;
+  }
+
+  static async deleteAllByStudentId(studentId) {
+    return await Borrow.destroy({ where: { studentId } });
   }
 }
 

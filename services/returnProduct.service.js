@@ -50,7 +50,11 @@ class ReturnProductService {
       overdueDay,
     };
 
-    await ReturnProductRepository.create(returnedProductData);
+    return await ReturnProductRepository.create(returnedProductData);
+  }
+
+  static async deleteAllByStudentId(studentId) {
+    return await ReturnProductRepository.deleteAllByStudentId(studentId);
   }
 }
 

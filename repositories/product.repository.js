@@ -11,11 +11,11 @@ class ProductRepository {
   }
 
   static async create(name) {
-    await Product.create({ name });
+    return await Product.create({ name });
   }
 
   static async update(id, updatedData) {
-    await Product.update(updatedData, {
+    return await Product.update(updatedData, {
       where: {
         id,
       },

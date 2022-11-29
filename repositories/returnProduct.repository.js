@@ -26,12 +26,16 @@ class ReturnProductRepository {
     const { studentId, productId, borrowDate, overdueDay } =
       returnedProductData;
 
-    await ReturnProduct.create({
+    return await ReturnProduct.create({
       studentId,
       productId,
       borrowDate,
       overdueDay,
     });
+  }
+
+  static async deleteAllByStudentId(studentId) {
+    return await ReturnProduct.destroy({ where: { studentId } });
   }
 }
 

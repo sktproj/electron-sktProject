@@ -43,12 +43,14 @@ function App() {
       >
         <div className={styles.root}>
           <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/studentAuth" element={<AdminPage />} />
-            <Route path="/student" element={<StudentPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-          </Routes>
+          <div className={styles.article}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/studentAuth" element={<AdminPage />} />
+              <Route path="/student" element={<StudentPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Routes>
+          </div>
           {renderModal(currentModal, studentCardId)}
         </div>
       </AppContext.Provider>

@@ -5,8 +5,12 @@ class StudentService {
     return await StudentRepository.findById(id);
   }
 
-  static async findAllIdd() {
-    return await StudentRepository.findAllIdd();
+  static async findAllId() {
+    return await StudentRepository.findAllId();
+  }
+
+  static async findAllGraduate() {
+    return await StudentRepository.findAllWhereGradeGTEThree();
   }
 
   static async findByGradeAndClassNMAndStudentNB(studentData) {
@@ -27,6 +31,10 @@ class StudentService {
 
   static async update(id, updatedStudentData) {
     return await StudentRepository.update(id, updatedStudentData);
+  }
+
+  static async deleteOne(id) {
+    return await StudentRepository.deleteOne(id);
   }
 }
 

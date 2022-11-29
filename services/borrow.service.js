@@ -18,7 +18,7 @@ class BorrowService {
   }
 
   static async createMany(studentId, productList) {
-    await Promise.all(
+    return await Promise.all(
       productList.map(product => {
         return BorrowRepository.create(studentId, product);
       }),
@@ -27,6 +27,10 @@ class BorrowService {
 
   static async deleteOne(id) {
     return await BorrowRepository.delete(id);
+  }
+
+  static async deleteAllByStudentId(studentId) {
+    return await BorrowRepository.deleteAllByStudentId(studentId);
   }
 }
 

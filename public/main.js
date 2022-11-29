@@ -17,7 +17,7 @@ const ElectronStore = require('electron-store');
 const electronStore = new ElectronStore();
 
 const { SerialPort } = require('serialport');
-const serialport = new SerialPort({ path: 'COM4', baudRate: 9600 });
+// const serialport = new SerialPort({ path: 'COM4', baudRate: 9600 });
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -37,33 +37,42 @@ function createWindow() {
       : `file://${path.join(__dirname, '../build/index.html')}`,
   );
 
-  serialport.on('open', () => {
-    serialport.on('data', async data => {
-      const cardId = data.toString('utf8').replace('\r', '');
-      const StudentService = require('../services/student.service');
-      const studentData = await StudentService.findById(cardId);
+  const currentYear = moment().year();
+  const currentMonth = moment().month() + 1;
+  const studentGradeUpdatedYear = electronStore.get('studentGradeUpdatedAt');
+  console.log(studentGradeUpdatedYear);
+  if (
+    !studentGradeUpdatedYear ||
+    (studentGradeUpdatedYear < currentYear && currentMonth >= 3)
+  ) {
+    (async () => {
+      const studentService = require('../services/student.service');
+      const borrowService = require('../services/borrow.service');
+      const returnProductService = require('../services/returnProduct.service');
 
-      win.webContents.send(
-        'ScanningCard',
-        JSON.stringify({ cardId, studentData }),
-      );
-    });
-  });
+      // 졸업생 db에서 삭제
+      const AllGraduate = await studentService.findAllGraduate();
+      for (const graduate of AllGraduate) {
+        const graduateId = graduate.id;
+        await borrowService.deleteAllByStudentId(graduateId);
+        await returnProductService.deleteAllByStudentId(graduateId);
+        await studentService.deleteOne(graduateId);
+      }
 
-  // const isUpdatedGradeInCurrentYear = electronStore.get(
-  //   'isUpdatedGradeInCurrentYear',
-  // );
-  // if (!isUpdatedGradeInCurrentYear && moment().month + 1 >= 2) {
-  //   const studentService = require('../services/student.service');
-  //   const AllStudentId = studentService.findAllIdd();
-  //   console.log(AllStudentId);
-  // }
-
-  (async () => {
-    const studentService = require('../services/student.service');
-    const AllStudentId = await studentService.findAllIdd();
-    console.log(AllStudentId[0].Student.id);
-  })();
+      // 학년 올리기
+      const AllStudentId = await studentService.findAllId();
+      for (const studentId of AllStudentId) {
+        const student = await studentService.findById(studentId.id);
+        const currentGrade = student.grade;
+        await studentService.update(studentId.id, {
+          grade: currentGrade + 1,
+          classNM: null,
+          studentNB: null,
+        });
+      }
+    })();
+    electronStore.set('studentGradeUpdatedAt', currentYear);
+  }
 
   remote.enable(win.webContents);
 }
@@ -80,7 +89,6 @@ ipcMain.on('GetStudentById', async (event, payload) => {
   const StudentService = require('../services/student.service');
   const studentId = JSON.parse(payload);
   const student = await StudentService.findById(studentId);
-  console.log(student.updatedAt);
   event.reply('Reply_GetStudentById', JSON.stringify(student));
 });
 
@@ -112,7 +120,6 @@ ipcMain.on('CreateStudent', async (event, payload) => {
 ipcMain.on('UpdateStudent', async (event, payload) => {
   const StudentService = require('../services/student.service');
   const { studentId, studentData } = JSON.parse(payload);
-  console.log('main.js student id : ', studentId);
   await StudentService.update(studentId, studentData);
   event.reply('Reply_UpdateStudent');
 });

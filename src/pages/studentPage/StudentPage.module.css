@@ -1,4 +1,11 @@
 .article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.mainContainer {
   display: grid;
   grid-template-areas:
     '. info historyTable .'
