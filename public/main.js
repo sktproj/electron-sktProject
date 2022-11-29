@@ -40,7 +40,6 @@ function createWindow() {
   const currentYear = moment().year();
   const currentMonth = moment().month() + 1;
   const studentGradeUpdatedYear = electronStore.get('studentGradeUpdatedAt');
-  console.log(studentGradeUpdatedYear);
   if (
     !studentGradeUpdatedYear ||
     (studentGradeUpdatedYear < currentYear && currentMonth >= 3)

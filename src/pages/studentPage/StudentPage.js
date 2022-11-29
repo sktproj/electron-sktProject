@@ -9,7 +9,7 @@ import StudentAPI from 'api/StudentAPI';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 import Timer from 'layouts/studentPage/timer/Timer';
 
-const DEFAULT_OPEN_TIME = 20 * 100; // ms
+const DEFAULT_OPEN_TIME = 60 * 100; // ms
 
 function StudentPage() {
   const { setCurrentModal } = useContext(AppContext);
@@ -22,7 +22,6 @@ function StudentPage() {
   }, []);
 
   useEffect(() => {
-    console.log(currentOpenTime);
     if (currentOpenTime <= 0) {
       setCurrentModal(KIND_OF_MODAL.NONE);
       window.location.hash = '/';

@@ -24,12 +24,7 @@ class StudentRepository {
   }
 
   static async update(id, updatedStudentData) {
-    return await Student.update(
-      { ...updatedStudentData },
-      { where: { id } },
-    ).catch(err => {
-      console.log(err);
-    });
+    return await Student.update({ ...updatedStudentData }, { where: { id } });
   }
 
   static async deleteOne(id) {

@@ -12,14 +12,6 @@ function HomePage() {
           className={styles.img}
         />
         <span className={styles.msg}>학생증을 찍어주세요</span>
-        <button
-          onClick={() => {
-            window.location.hash =
-              '/student?id=123456&grade=3&classNM=5&name=신재훈';
-          }}
-        >
-          test
-        </button>
       </div>
     </div>
   );
