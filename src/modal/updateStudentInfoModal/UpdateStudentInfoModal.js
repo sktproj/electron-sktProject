@@ -1,6 +1,6 @@
 import CustomModal from 'components/customModal/CustomModal';
 import CustomInput from 'components/customInput/CustomInput';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import CustomButton from 'components/customButton/CustomButton';
 import StudentAPI from 'api/StudentAPI';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
@@ -10,34 +10,24 @@ import URLUtil from 'utils/URL';
 
 const customStyles = {
   content: {
-    width: '400px',
+    width: '300px',
     height: '230px',
   },
 };
 
-function ModifyStudentInfoModal() {
+function UpdateStudentInfoModal() {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
     classNM: '',
     studentNB: '',
-    name: '',
   });
-
-  useEffect(() => {
-    (async () => {
-      const studentCardId = URLUtil.getQueryParam('id');
-      const student = await StudentAPI.findById(studentCardId);
-      const { classNM, studentNB, name } = student;
-      setStudentData(prev => {
-        return { ...prev, classNM, studentNB, name };
-      });
-    })();
-  }, []);
 
   return (
     <CustomModal style={customStyles}>
-      <div className={styles.modifyStudentInfoModal}>
-        <div className={styles.title}>학생 정보 수정</div>
+      <div className={styles.updateStudentInfoModal}>
+        <div className={styles.title}>
+          올해 배정받으신 반, 번호를 입력하세요.
+        </div>
         <div className={styles.inputContainer}>
           {[
             { key: 'classNM', placeholder: '반' },
@@ -65,22 +55,6 @@ function ModifyStudentInfoModal() {
               />
             );
           })}
-          <CustomInput
-            value={studentData.name}
-            width="100px"
-            height="45px"
-            color="#4e73df"
-            fontSize="22px"
-            placeholder={'이름'}
-            onChangeEvent={e => {
-              const text = e.target.value;
-              if (/^[ㄱ-ㅎ|가-힣]+$/.test(text) || !text) {
-                setStudentData(prev => {
-                  return { ...prev, name: text };
-                });
-              }
-            }}
-          />
         </div>
         <div className={styles.buttonContainer}>
           <CustomButton
@@ -115,4 +89,4 @@ function ModifyStudentInfoModal() {
   );
 }
 
-export default ModifyStudentInfoModal;
+export default UpdateStudentInfoModal;

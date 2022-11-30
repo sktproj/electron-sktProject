@@ -8,6 +8,7 @@ const KIND_OF_MODAL = {
   ACCESS_STUDENT_PAGE_MODAL: 'accessStudentPageModal',
   CHANGE_ADMIN_PASSWORD: 'changeAdminPassword',
   MODIFY_STUDENT_INFO: 'modifyStudentInfo',
+  UPDATE_STUDENT_INFO: 'updateStudentInfoModal',
 };
 
 export default KIND_OF_MODAL;

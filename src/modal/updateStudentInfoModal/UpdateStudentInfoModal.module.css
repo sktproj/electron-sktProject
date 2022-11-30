@@ -1,4 +1,4 @@
-.modifyStudentInfoModal {
+.updateStudentInfoModal {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,7 +11,7 @@
   margin-bottom: 6px;
   color: #494949;
   font-family: 'maplestoryBold';
-  font-size: 26px;
+  font-size: 22px;
 }
 
 .inputContainer {
@@ -22,7 +22,7 @@
 }
 
 .buttonContainer {
-  width: 50%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;

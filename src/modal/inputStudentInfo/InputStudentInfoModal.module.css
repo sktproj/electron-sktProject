@@ -6,6 +6,22 @@
   height: 100%;
 }
 
+.titleContainer {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.title {
+  margin-bottom: 12px;
+  font-family: 'maplestoryBold';
+  font-size: 28px;
+}
+
+.alert {
+  font-family: 'maplestoryLight';
+  color: #e74a3b;
+}
+
 .inputContainer {
   display: flex;
   justify-content: space-between;

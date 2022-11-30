@@ -10,22 +10,28 @@ import AppContext from 'context/AppContext';
 const customStyles = {
   content: {
     width: '500px',
-    height: '200px',
+    height: '300px',
   },
 };
 
 function InputStudentInfoModal({ studentCardId }) {
   const { setCurrentModal } = useContext(AppContext);
   const [studentData, setStudentData] = useState({
-    grade: 0,
-    classNM: 0,
-    studentNB: 0,
+    grade: '',
+    classNM: '',
+    studentNB: '',
     name: '',
   });
 
   return (
     <CustomModal style={customStyles}>
       <div className={styles.inputStudentInfoModal}>
+        <div className={styles.titleContainer}>
+          <div className={styles.title}>신규 학생 정보 입력</div>
+          <div className={styles.alert}>
+            *학년은 수정이 안되오니 신중하게 입력하시길 바랍니다.
+          </div>
+        </div>
         <div className={styles.inputContainer}>
           {[
             { key: 'grade', placeholder: '학년' },
@@ -63,7 +69,7 @@ function InputStudentInfoModal({ studentCardId }) {
             placeholder={'이름'}
             onChangeEvent={e => {
               const text = e.target.value;
-              if (/^[가-힣]*$/.test(text) || !text) {
+              if (/^[ㄱ-ㅎ|가-힣]+$/.test(text) || !text) {
                 setStudentData(prev => {
                   const text = e.target.value;
                   return { ...prev, name: text };
