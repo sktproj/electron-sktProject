@@ -36,7 +36,7 @@ function StudentPage() {
       const student = await StudentAPI.findById(studentCardId);
 
       if (!student.classNM || !student.studentNB) {
-        setCurrentModal(KIND_OF_MODAL.MODIFY_STUDENT_INFO);
+        setCurrentModal(KIND_OF_MODAL.UPDATE_STUDENT_INFO);
       }
     })();
   }, []);

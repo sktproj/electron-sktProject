@@ -5,12 +5,12 @@ import CustomButton from 'components/customButton/CustomButton';
 import StudentAPI from 'api/StudentAPI';
 import KIND_OF_MODAL from 'constant/KIND_OF_MODAL';
 import AppContext from 'context/AppContext';
-import styles from './ModifyStudentInfoModal.module.css';
+import styles from './UpdateStudentInfoModal.module.css';
 import URLUtil from 'utils/URL';
 
 const customStyles = {
   content: {
-    width: '300px',
+    width: '350px',
     height: '230px',
   },
 };
@@ -71,17 +71,6 @@ function UpdateStudentInfoModal() {
             }}
           >
             완료
-          </CustomButton>
-          <CustomButton
-            width="80px"
-            height="40px"
-            color="#e74a3b"
-            fontSize="25px"
-            onClickEvent={() => {
-              setCurrentModal(KIND_OF_MODAL.NONE);
-            }}
-          >
-            취소
           </CustomButton>
         </div>
       </div>

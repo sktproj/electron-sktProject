@@ -7,7 +7,6 @@ const remote = require('@electron/remote/main');
 remote.initialize();
 
 const { ipcMain } = require('electron');
-
 require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 require('../models').sequelize.sync();
 
@@ -29,6 +28,7 @@ function createWindow() {
       contextIsolation: false,
     },
     autoHideMenuBar: true,
+    fullscreen: true,
   });
 
   win.loadURL(
@@ -53,10 +53,12 @@ function createWindow() {
   const currentYear = moment().year();
   const currentMonth = moment().month() + 1;
   const studentGradeUpdatedYear = electronStore.get('studentGradeUpdatedAt');
+  console.log(studentGradeUpdatedYear, currentMonth, currentYear);
   if (
     !studentGradeUpdatedYear ||
     (studentGradeUpdatedYear < currentYear && currentMonth >= 3)
   ) {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
     (async () => {
       const studentService = require('../services/student.service');
       const borrowService = require('../services/borrow.service');
@@ -238,8 +240,8 @@ ipcMain.on('GetReturnProductListFilterOverdue', async (event, payload) => {
 ipcMain.on('WriteExcelFile', async (event, payload) => {
   const backgroundPath = `${require('osenv').home()}\\Desktop`;
   const workbook = await createWorkbook();
-  workbook.csv.writeFile(
-    backgroundPath + `/${moment().format('YYYYMMDD')}_양심물품실_반납기록.csv`,
+  workbook.xlsx.writeFile(
+    backgroundPath + `/${moment().format('YYYYMMDD')}_양심물품실_반납기록.xlsx`,
   );
   event.reply('Reply_WriteExcelFile');
 });

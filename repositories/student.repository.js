@@ -24,6 +24,7 @@ class StudentRepository {
   }
 
   static async update(id, updatedStudentData) {
+    console.log('bbbbbbbbbbbbbbbbbbbbb');
     return await Student.update({ ...updatedStudentData }, { where: { id } });
   }
 

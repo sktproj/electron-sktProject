@@ -14,6 +14,7 @@ import AdminPage from 'pages/adminPage/AdminPage';
 import AccessStudentPageModal from 'modal/accessStudentPageModal/AccessStudentPageModal';
 import ChangeAdminPassword from 'modal/changeAdminPasswordModal/ChangeAdminPasswordModal';
 import ModifyStudentInfoModal from 'modal/modifyStudentInfoModal/ModifyStudentInfoModal';
+import UpdateStudentInfoModal from 'modal/updateStudentInfoModal/UpdateStudentInfoModal';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -80,6 +81,9 @@ function renderModal(currentModal, studentCardId) {
 
     case KIND_OF_MODAL.MODIFY_STUDENT_INFO:
       return <ModifyStudentInfoModal />;
+
+    case KIND_OF_MODAL.UPDATE_STUDENT_INFO:
+      return <UpdateStudentInfoModal />;
 
     default:
       return null;

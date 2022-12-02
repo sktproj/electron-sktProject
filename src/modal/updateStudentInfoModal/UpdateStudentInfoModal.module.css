@@ -11,7 +11,7 @@
   margin-bottom: 6px;
   color: #494949;
   font-family: 'maplestoryBold';
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .inputContainer {
@@ -24,6 +24,6 @@
 .buttonContainer {
   width: 70%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
