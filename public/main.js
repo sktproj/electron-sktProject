@@ -240,8 +240,8 @@ ipcMain.on('GetReturnProductListFilterOverdue', async (event, payload) => {
 ipcMain.on('WriteExcelFile', async (event, payload) => {
   const backgroundPath = `${require('osenv').home()}\\Desktop`;
   const workbook = await createWorkbook();
-  workbook.xlsx.writeFile(
-    backgroundPath + `/${moment().format('YYYYMMDD')}_양심물품실_반납기록.xlsx`,
+  workbook.csv.writeFile(
+    backgroundPath + `/${moment().format('YYYYMMDD')}_양심물품실_반납기록.csv`,
   );
   event.reply('Reply_WriteExcelFile');
 });
