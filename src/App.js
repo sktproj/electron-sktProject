@@ -20,9 +20,11 @@ function App() {
 
   ipcRenderer.on('ScanningCard', (event, payload) => {
     const { cardId, studentData } = JSON.parse(payload);
+    console.log(studentData);
     if (studentData) {
       const { id, grade, classNM, name } = studentData;
       window.location.hash = `/student?id=${id}&grade=${grade}&classNM=${classNM}&name=${name}`;
+      window.location.reload();
       return;
     }
 

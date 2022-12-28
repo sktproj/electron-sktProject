@@ -12,7 +12,6 @@ import URLUtil from 'utils/URL';
 import moment from 'moment';
 
 function HistoryTable() {
-  const [reloadEvent, reload] = useState();
   const [currentFilter, setCurrentFilter] = useState(
     KIND_OF_TABLE_FILTER.BORROW,
   );
@@ -23,10 +22,10 @@ function HistoryTable() {
   useEffect(() => {
     (async () => {
       const studentId = URLUtil.getQueryParam('id');
-      setHistory(await getHistory(currentFilter, studentId, reload));
+      setHistory(await getHistory(currentFilter, studentId));
       setCurrentPage(1);
     })();
-  }, [currentFilter, reloadEvent]);
+  }, [currentFilter]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * TABLE_SHOWED_ROW_AMOUNT;
@@ -53,15 +52,15 @@ function HistoryTable() {
   );
 }
 
-async function getHistory(currentFilter, studentId, reload) {
+async function getHistory(currentFilter, studentId) {
   switch (currentFilter) {
     case KIND_OF_TABLE_FILTER.BORROW:
       const borrowList = await BorrowAPI.getBorrowListAll(studentId);
-      return processBorrowList(borrowList, reload);
+      return processBorrowList(borrowList);
 
     case KIND_OF_TABLE_FILTER.OVERDUE:
       const overdueList = await BorrowAPI.getBorrowListFilterOverdue(studentId);
-      return processBorrowList(overdueList, reload);
+      return processBorrowList(overdueList);
 
     case KIND_OF_TABLE_FILTER.RETURN:
       return await ReturnProductAPI.getReturnProductList(studentId);
@@ -70,7 +69,7 @@ async function getHistory(currentFilter, studentId, reload) {
   }
 }
 
-function processBorrowList(tableData, reload) {
+function processBorrowList(tableData) {
   return tableData.map(borrow => {
     const productName = borrow.Product.name;
     const { id, borrowDate, returnDueDate } = borrow;
@@ -98,7 +97,7 @@ function processBorrowList(tableData, reload) {
         color="#e74a3b"
         onClickEvent={async () => {
           await ReturnProductAPI.returnProduct(id);
-          reload({});
+          window.location.reload();
         }}
       >
         반납
