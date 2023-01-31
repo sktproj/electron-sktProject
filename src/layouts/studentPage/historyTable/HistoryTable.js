@@ -13,7 +13,7 @@ import moment from 'moment';
 
 function HistoryTable() {
   const [currentFilter, setCurrentFilter] = useState(
-    KIND_OF_TABLE_FILTER.BORROW,
+    URLUtil.getQueryParam('filter') || KIND_OF_TABLE_FILTER.BORROW,
   );
   const [history, setHistory] = useState([]);
   const [tableRow, setTableRow] = useState([]);
@@ -56,11 +56,11 @@ async function getHistory(currentFilter, studentId) {
   switch (currentFilter) {
     case KIND_OF_TABLE_FILTER.BORROW:
       const borrowList = await BorrowAPI.getBorrowListAll(studentId);
-      return processBorrowList(borrowList);
+      return processBorrowList(borrowList, currentFilter);
 
     case KIND_OF_TABLE_FILTER.OVERDUE:
       const overdueList = await BorrowAPI.getBorrowListFilterOverdue(studentId);
-      return processBorrowList(overdueList);
+      return processBorrowList(overdueList, currentFilter);
 
     case KIND_OF_TABLE_FILTER.RETURN:
       return await ReturnProductAPI.getReturnProductList(studentId);
@@ -69,10 +69,11 @@ async function getHistory(currentFilter, studentId) {
   }
 }
 
-function processBorrowList(tableData) {
+function processBorrowList(tableData, currentFilter) {
   return tableData.map(borrow => {
     const productName = borrow.Product.name;
-    const { id, borrowDate, returnDueDate } = borrow;
+    const { borrowDate, returnDueDate } = borrow;
+    const borrowId = borrow.id;
     let remainingDays = moment(returnDueDate).diff(moment(), 'days');
     const remainingReturnDay =
       remainingDays >= 0
@@ -96,7 +97,14 @@ function processBorrowList(tableData) {
         fontSize="22px"
         color="#e74a3b"
         onClickEvent={async () => {
-          await ReturnProductAPI.returnProduct(id);
+          await ReturnProductAPI.returnProduct(borrowId);
+          const { id, grade, classNM, name } = URLUtil.getQueryParams([
+            'id',
+            'grade',
+            'classNM',
+            'name',
+          ]);
+          window.location.hash = `/student?id=${id}&grade=${grade}&classNM=${classNM}&name=${name}&filter=${currentFilter}`;
           window.location.reload();
         }}
       >
